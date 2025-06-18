@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sidebar Hover</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <!-- SIDEBAR  -->
+        <div class="sidebar d-flex flex-column">
+            <div class="d-flex flex-column align-items-center py-3">
+                <img class="sidebar-img" th:src="@{/img/skillmart-logo.png}" alt="skillmart logo">
+                <h5 class="mt-2">skillMART</h5>
+            </div>
+            <a th:href="@{/dash/home}" class="nav-link">
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/dash/products}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Prodotti</span>
+            </a>
+            <a th:href="@{/dash/runningOut}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Running out</span>
+            </a>
+            <a th:href="@{/dash/outOfStock}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Out of stock</span>
+            </a>
+            <div class="mt-auto mb-2">
+                <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
+                <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                <a th:href="@{/logout}" class="nav-link mt-auto">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    
+    </header>
+
+    <main>
+        <div class="container table-main-content">
+            <!-- TITLE  -->
+            <div class="col-12">
+                <div class="row">
+                    <h1>Prodotti in magazzino</h1>
+                    <!-- TABLE -->
+                    <div class="card-flow">
+                        <div class="card-body card-scrollable card-bg table-responsive">
+                            <table class="table tab table-hover border-dark my-5">
+                                <!-- THEAD -->
+                                <thead>
+                                    <tr class="fs-5 fw-bold">
+                                        <th scope="col" class="tab-nome">Foto</th>
+                                        <th scope="col" class="col-nome">Nome</th>
+                                        <th scope="col" class="col-descrizione">Descrizione</th>
+                                        <th scope="col">Marca</th>
+                                        <th scope="col" class="col-large">Prezzo</th>
+                                        <th scope="col">Categoria</th>
+                                        <th scope="col">Quantità</th>
+                                        <th scope="col">evidenza</th>
+                                        <th scope="col"></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <!-- TBODY -->
+                                <tbody class="">
+                                    <tr th:each="product : ${list}" th:classappend="
+                                         ${product.quantita} &lt; 1 ? 'out-stock' : 
+                                         (${product.quantita} &lt; 19 ? 'low-quantity' : '')" class="fs-6 mt-5 clickable-row fs-5 fw-bold"
+                                        th:data-href="@{'/product/show/' + ${product.id}}" role="link" tabindex="0">
+                                        <td class="tab_img">
+                                            <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}"
+                                                alt="Photo"
+                                                style="width:90px; border-radius:12px; object-fit:cover; display:block;" />
+                                        </td>
+
+                                        <td class="col-nome">
+                                            <div class="mt-3" th:text="${product.nome}">
+                                            </div>
+                                        </td>
+                                        <td class="col-descrizione">
+                                            <div class="mt-3" th:text="${product.descrizione}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mt-3" th:text="${product.marca.nome}">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="mt-3"
+                                                th:text="${#numbers.formatDecimal(product.prezzo, 1, 'COMMA', 2, 'POINT') + ' €'}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mt-3" th:text="${product.categoria.nome}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mt-3" th:text="${product.quantita}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mt-3" th:text="${product.evidence}">
+                                            </div>
+                                        </td>
+                                        <!-- BUTTONS -->
+                                        <td>
+                                            <div class="d-flex justify-content-evenly">
+                                                <a class="btn icon-link icon-link-hover text-decoration-none  text-white rounded-pill me-3"
+                                                    th:href="@{|/product/show/${product.id}|}">
+                                                    <i class="bi bi-search fw-bold fs-3"
+                                                        style="color: rgb(0, 94, 255);"></i>
+                                                </a>
+                                                <a class="btn icon-link icon-link-hover text-decoration-none  text-white rounded-pill me-3 fs-3"
+                                                    th:href="@{|/product/form/${product.id}|}">
+                                                    <i class="bi bi-pencil-fill" style="color: rgb(106, 0, 255);"></i>
+                                                </a>
+                                                <!-- Button trigger modal -->
+                                                <button type="button"
+                                                    class="btn  icon-link rounded-pill icon-link-hover fs-3 "
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#deleteModal' + ${product.id}"
+                                                    data-id="${product.id}">
+                                                    <i class="bi bi-trash" style="color: rgb(250, 0, 162);"></i>
+                                                </button>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade  text-decoration-none border-0" th:id="'deleteModal' + ${product.id}"
+                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog my-5">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header card-bg">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                                Attenzione</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body card-bg py-2 mx-4">
+                                                            Sei sicuro di voler eliminare il prodotto ?
+                                                            <img class="ms-auto px-4" th:src="@{/img/alert.webp}"
+                                                                width="20%" height="auto"></img>
+                                                        </div>
+
+                                                        <div class="modal-footer card-bg">
+                                                            <form
+                                                                th:action="@{'/product/{id}/delete'(id=${product.id})}"
+                                                                method="post">
+                                                                <button type="button" class="btn btn-grey rounded"
+                                                                    data-bs-dismiss="modal">Annulla</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-red rounded">Conferma ed
+                                                                    elimina</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap bundle -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz'
+        crossorigin='anonymous'></script>
+
+</body>
+
+
+</html>

@@ -17,4 +17,10 @@ public interface ProdottoRepo extends JpaRepository<Prodotto, Integer> {
     @Query("SELECT p FROM Prodotto p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.descrizione) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.marca.nome) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Prodotto> cercaProdotti(@Param("keyword") String keyword);
 
+    int countByAllIgnoreCase();
+
+    int countByQuantitaLessThan(int quantita);
+
+    List<Prodotto> findByQuantitaLessThan(Integer quantita);
+
 }

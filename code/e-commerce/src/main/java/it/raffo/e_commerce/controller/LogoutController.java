@@ -21,6 +21,6 @@ public class LogoutController {
 
     @GetMapping("/logout-success")
     public String logoutSuccess() {
-        return "/common/logout"; // Renderizza il template logout.html
+        return "/common/logout";
     }
 }

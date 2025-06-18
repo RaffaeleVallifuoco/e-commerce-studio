@@ -19,8 +19,9 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(request -> request
                         // rotte accessibili a tutti
-                        .requestMatchers("/index/**", "/product/show/**", "/resources/**", "/logout", "/api/**",
-                                "img/**", "/css/**")
+                        .requestMatchers("/index/**", "/product/show/**", "/resources/**", "/logout", "/logout-success",
+                                "/api/**",
+                                "/img/**", "/css/**")
                         .permitAll()
                         .requestMatchers("/tab/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())

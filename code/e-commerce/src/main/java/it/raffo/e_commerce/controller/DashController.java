@@ -37,7 +37,37 @@ public class DashController {
     UserRepo userRepo;
 
     @GetMapping("/home")
-    public String index(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
+    public String dashboardHome(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
+
+        List<Prodotto> productList = new ArrayList<>();
+
+        if (keyword != null && !keyword.isBlank()) {
+
+            productList = productRepo.cercaProdotti(keyword);
+
+        } else {
+
+            productList = productRepo.findAll();
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> currentUser = userRepo.findByUsername(username);
+        User user = currentUser.get();
+        model.addAttribute("user", user);
+        model.addAttribute("list", productList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+        model.addAttribute("category", categoryRepo.findAll());
+        model.addAttribute("total", productRepo.countByAllIgnoreCase());
+        model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
+        model.addAttribute("runningOut", productRepo.countByQuantitaLessThan(20));
+
+        return "/dash/home";
+    }
+
+    @GetMapping("/products")
+    public String productsList(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
         List<Prodotto> productList = new ArrayList<>();
 
@@ -60,7 +90,63 @@ public class DashController {
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
         model.addAttribute("category", categoryRepo.findAll());
 
-        return "/dash/home";
+        return "/dash/products";
+    }
+
+    @GetMapping("/runningOut")
+    public String runningOutList(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
+
+        List<Prodotto> productList = new ArrayList<>();
+
+        if (keyword != null && !keyword.isBlank()) {
+
+            productList = productRepo.cercaProdotti(keyword);
+
+        } else {
+
+            productList = productRepo.findAll();
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> currentUser = userRepo.findByUsername(username);
+        User user = currentUser.get();
+        model.addAttribute("user", user);
+        model.addAttribute("list", productList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+        model.addAttribute("category", categoryRepo.findAll());
+        model.addAttribute("runningOut", productRepo.findByQuantitaLessThan(10));
+
+        return "/dash/runningout";
+    }
+
+    @GetMapping("/outOfStock")
+    public String outOfStockList(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
+
+        List<Prodotto> productList = new ArrayList<>();
+
+        if (keyword != null && !keyword.isBlank()) {
+
+            productList = productRepo.cercaProdotti(keyword);
+
+        } else {
+
+            productList = productRepo.findAll();
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> currentUser = userRepo.findByUsername(username);
+        User user = currentUser.get();
+        model.addAttribute("user", user);
+        model.addAttribute("list", productList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+        model.addAttribute("category", categoryRepo.findAll());
+        model.addAttribute("outOfStock", productRepo.findByQuantitaLessThan(1));
+
+        return "/dash/outofstock";
     }
 
     @GetMapping("/home/{category_id}")

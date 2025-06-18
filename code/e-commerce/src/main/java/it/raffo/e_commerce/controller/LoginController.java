@@ -35,10 +35,9 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(username, password));
             if (auth.isAuthenticated()) {
                 request.getSession().setAttribute("user", auth.getPrincipal());
-                return new ModelAndView("redirect:/index/home"); // Reindirizza alla pagina principale
+                return new ModelAndView("redirect:");
             }
         } catch (AuthenticationException e) {
-            // Gestisci l'errore di autenticazione
             return new ModelAndView("login", "error", "Invalid username or password");
         }
 

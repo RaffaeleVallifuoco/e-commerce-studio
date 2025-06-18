@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
+
+</html>
 
 <head>
     <meta charset="UTF-8" />
@@ -18,95 +20,76 @@
                 <img class="sidebar-img" th:src="@{/img/skillmart-logo.png}" alt="skillmart logo">
                 <h5 class="mt-2">skillMART</h5>
             </div>
-            <a href="#" class="nav-link">
+            <a th:href="@{/dash/home}" class="nav-link">
                 <i class="bi bi-house-door"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="#" class="nav-link">
+            <a th:href="@{/dash/products}" class="nav-link">
                 <i class="bi bi-bar-chart"></i>
-                <span>Analytics</span>
+                <span>Prodotti</span>
             </a>
-            <a href="#" class="nav-link">
-                <i class="bi bi-gear"></i>
-                <span>Settings</span>
+            <a th:href="@{/dash/runningOut}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Running out</span>
             </a>
-            <a href="#" class="nav-link">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Logout</span>
+            <a th:href="@{/dash/outOfStock}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Out of stock</span>
             </a>
-        </div>
-    </header>
-
-    <main>
-        <div class="container main-content">
-            <div class="col-sm-12">
-                <!-- UPPER ROW  -->
-                <div class="row">
-                    <div class="">
-                        <h1 class="mb-4">skillMart dashboard</h1>
-                    </div>
-                </div>
-                <!-- LEFT COL  -->
-                <div class="col-8">
-                    <div class="row">
-                        <div class="container my-5">
-                            <div class="p-5 text-center bg-body-tertiary rounded-3"> <svg class="bi mt-4 mb-3"
-                                    style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true">
-                                    <use xlink:href="#bootstrap"></use>
-                                </svg>
-                                <h1 class="text-body-emphasis">Jumbotron with icon</h1>
-                                <p class="col-lg-8 mx-auto fs-5 text-muted">
-                                    This is a custom jumbotron featuring an SVG image at the top, some longer text that
-                                    wraps early thanks to a
-                                    responsive <code>.col-*</code> class, and a customized call to action.
-                                </p>
-                                <div class="d-inline-flex gap-2 mb-5"> <button
-                                        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
-                                        type="button">
-                                        Call to action
-                                        <svg class="bi ms-2" width="24" height="24" aria-hidden="true">
-                                            <use xlink:href="#arrow-right-short"></use>
-                                        </svg> </button> <button
-                                        class="btn btn-outline-secondary btn-lg px-4 rounded-pill" type="button">
-                                        Secondary link
-                                    </button> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- RIGHT COL  -->
-                <div class="col-2">
-                    <div class="row">
-                        <div class="container my-5">
-                            <div class="p-5 text-center bg-body-tertiary rounded-3"> <svg class="bi mt-4 mb-3"
-                                    style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true">
-                                    <use xlink:href="#bootstrap"></use>
-                                </svg>
-                                <h1 class="text-body-emphasis">Jumbotron with icon</h1>
-                                <p class="col-lg-8 mx-auto fs-5 text-muted">
-                                    This is a custom jumbotron featuring an SVG image at the top, some longer text that
-                                    wraps early thanks to a
-                                    responsive <code>.col-*</code> class, and a customized call to action.
-                                </p>
-                                <div class="d-inline-flex gap-2 mb-5"> <button
-                                        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-                                        Call to action
-                                        <svg class="bi ms-2" width="24" height="24" aria-hidden="true">
-                                            <use xlink:href="#arrow-right-short"></use>
-                                        </svg> </button> <button class="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-                                        type="button">
-                                        Secondary link
-                                    </button> </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="mt-auto mb-2">
+                <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
+                <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                <a th:href="@{/logout}" class="nav-link mt-auto">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
 
+    </header>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </main>
+<main>
+    <div class="container main-content">
+        <!-- TITLE  -->
+        <div class="col-12">
+            <div class="roe">
+                <h1>skillMart Dashboard</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <a class="text-decoration-none" th:href="@{/dash/products}">
+                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <h1 class="text-body-emphasis">Prodotti in magazzino</h1>
+                        <h2 class="fs-5 text-muted" th:text="${total}"></h2>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-4">
+                <a class="text-decoration-none" th:href="@{/dash/runningOut}">
+                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <h1 class="text-body-emphasis">Prodotti in esaurimento</h1>
+                        <h2 class="fs-5 text-muted" th:text="${runningOut}"></h2>
+                    </div>
+                </a>
+                <a class="text-decoration-none" th:href="@{/dash/outOfStock}">
+                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <h1 class="text-body-emphasis">Out of stock</h1>
+                        <h2 class="fs-5 text-muted" th:text="${outOfStock}"></h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Bootstrap bundle -->
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'
+    integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz'
+    crossorigin='anonymous'></script>
+
 </body>
+
 
 </html>

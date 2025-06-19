@@ -35,15 +35,15 @@
                 <span>Out of stock</span>
             </a>
             <div class="mt-auto mb-2">
-                <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
-                <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                <span class="mt-auto ms-3" th:if="${user != null}" th:text="'Ciao ' + ${user.username}"></span> <img class="profile"
+                    th:src="@{/img/profile1.png}" alt="">
                 <a th:href="@{/logout}" class="nav-link mt-auto">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
             </div>
         </div>
-    
+
     </header>
 
     <main>
@@ -123,7 +123,7 @@
                                                         style="color: rgb(0, 94, 255);"></i>
                                                 </a>
                                                 <a class="btn icon-link icon-link-hover text-decoration-none  text-white rounded-pill me-3 fs-3"
-                                                    th:href="@{|/product/form/${dash.id}|}">
+                                                    th:href="@{|/dash/form/${product.id}|}">
                                                     <i class="bi bi-pencil-fill" style="color: rgb(106, 0, 255);"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
@@ -150,13 +150,11 @@
                                                         </div>
                                                         <div class="modal-body card-bg py-2 mx-4">
                                                             Sei sicuro di voler eliminare il prodotto ?
-                                                            <img class="ms-auto px-4" th:src="@{/img/alert.webp}"
-                                                                width="20%" height="auto"></img>
+                                                            <<img class="ms-auto px-4" th:src="@{/img/alert.webp}" width="20%" height="auto" />
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <form
-                                                                th:action="@{'/dash/{id}/delete'(id=${product.id})}"
+                                                            <form th:action="@{'/dash/{id}/delete'(id=${product.id})}"
                                                                 method="post">
                                                                 <button type="button" class="btn btn-grey rounded"
                                                                     data-bs-dismiss="modal">Annulla</button>

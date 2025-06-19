@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
 
 
@@ -50,76 +50,87 @@
 <main>
     <div class="container main-content">
         <!-- TITLE  -->
-        <div class="col-10">
-            <div class="row">
+        <div class="row justify-content-between align-items-center mb-4">
+            <div class="col-auto">
                 <h1>skillMart Dashboard</h1>
             </div>
+            <div class="col-auto">
+                <button class="btn btn-blue d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCreate"
+                    aria-controls="offcanvasCreate">
+                    <i class="bi bi-plus fs-1"></i> Inserisci nuovo prodotto
+                </button>
+            </div>
         </div>
-        <div class="col-2">
-            <!-- Bottone che apre l'offcanvas -->
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCreate"
-                aria-controls="offcanvasCreate">
-                Crea nuovo ordine
-            </button>
-            
-            <!-- Offcanvas -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCreate" aria-labelledby="offcanvasCreateLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasCreateLabel">Crea nuovo ordine</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <!-- FORM  -->
-                    <form th:action="@{/dash/insert}" th:object="${nuovoprodotto}" method="post">
-                    
-                        <div class="mb-3">
-                            <label for="nome" class="form-label">Nome prodotto</label>
-                            <input type="text" id="nome" th:field="*{nome}" class="form-control" placeholder="Inserisci il nome" />
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="descrizione" class="form-label">Descrizione</label>
-                            <textarea id="descrizione" th:field="*{descrizione}" class="form-control" rows="3"
-                                placeholder="Descrizione del prodotto"></textarea>
-                        </div>
-                    
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" id="evidence" th:field="*{evidence}" class="form-check-input" />
-                            <label for="evidence" class="form-check-label">Evidenza</label>
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="categoria" class="form-label">Categoria</label>
-                            <select id="categoria" th:field="*{categoria}" class="form-select">
-                                <option th:each="cat : ${category}" th:value="${cat.id}" th:text="${cat.nome}"></option>
-                            </select>
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="marca" class="form-label">Marca</label>
-                            <select id="marca" th:field="*{marca}" class="form-select">
-                                <option th:each="marca : ${brand}" th:value="${marca.id}" th:text="${marca.nome}"></option>
-                            </select>
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="prezzo" class="form-label">Prezzo (€)</label>
-                            <input type="number" id="prezzo" th:field="*{prezzo}" step="0.01" class="form-control" placeholder="0.00" />
-                        </div>
-                    
-                        <div class="mb-3">
-                            <label for="quantita" class="form-label">Quantità</label>
-                            <input type="number" id="quantita" th:field="*{quantita}" class="form-control" placeholder="0" />
-                        </div>
-                    
-                        <div class="mb-4">
-                            <label for="dataProduzione" class="form-label">Data di produzione</label>
-                            <input type="date" id="dataProduzione" th:field="*{dataProduzione}" class="form-control" />
-                        </div>
-                    
-                        <button type="submit" class="btn btn-primary w-100">Inserisci prodotto</button>
-                    </form>
-                </div>
+        
+        <!-- OFFCANVAS -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCreate" aria-labelledby="offcanvasCreateLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasCreateLabel">Crea nuovo ordine</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- FORM  -->
+                <form th:action="@{/dash/insert}" th:object="${nuovoprodotto}" method="post">
+                
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome prodotto</label>
+                        <input type="text" id="nome" th:field="*{nome}" class="form-control" placeholder="Inserisci il nome"
+                               th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="descrizione" class="form-label">Descrizione</label>
+                        <textarea id="descrizione" th:field="*{descrizione}" class="form-control" rows="3"
+                            placeholder="Descrizione del prodotto"></textarea>
+                    </div>
+                
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" id="evidence" th:field="*{evidence}" class="form-check-input" />
+                        <label for="evidence" class="form-check-label">Evidenza</label>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria</label>
+                        <select id="categoria" th:field="*{categoria}" class="form-select"
+                                th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid'">
+                            <option th:each="cat : ${category}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+                        </select>
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="marca" class="form-label">Marca</label>
+                        <select id="marca" th:field="*{marca}" class="form-select"
+                                th:classappend="${#fields.hasErrors('marca')} ? 'is-invalid'">
+                            <option th:each="marca : ${brand}" th:value="${marca.id}" th:text="${marca.nome}"></option>
+                        </select>
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></div>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="prezzo" class="form-label">Prezzo (€)</label>
+                        <input type="number" id="prezzo" th:field="*{prezzo}" step="0.01" class="form-control" placeholder="0.00"
+                               th:classappend="${#fields.hasErrors('prezzo')} ? 'is-invalid'" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="quantita" class="form-label">Quantità</label>
+                        <input type="number" id="quantita" th:field="*{quantita}" class="form-control" placeholder="0"
+                               th:classappend="${#fields.hasErrors('quantita')} ? 'is-invalid'" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('quantita')}" th:errors="*{quantita}"></div>
+                    </div>
+                
+                    <div class="mb-4">
+                        <label for="dataProduzione" class="form-label">Data di produzione</label>
+                        <input type="date" id="dataProduzione" th:field="*{dataProduzione}" class="form-control"
+                               th:classappend="${#fields.hasErrors('dataProduzione')} ? 'is-invalid'" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('dataProduzione')}" th:errors="*{dataProduzione}"></div>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary w-100">Inserisci prodotto</button>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -151,13 +162,13 @@
             <div class="col-4">
                 <a class="text-decoration-none" th:href="@{/dash/runningOut}">
                     <div class="jumbotron pe-5 py-5 text-center rounded-3 my-3">
-                        <h1 class="text-body-emphasis">Prodotti in esaurimento</h1>
+                        <h2 class="text-body-emphasis">Prodotti in esaurimento</h2>
                         <h2 class="fs-5 text-muted" th:text="${runningOut}"></h2>
                     </div>
                 </a>
                 <a class="text-decoration-none" th:href="@{/dash/outOfStock}">
                     <div class="jumbotron pe-5 py-5 text-center rounded-3 my-3">
-                        <h1 class="text-body-emphasis">Out of stock</h1>
+                        <h3 class="text-body-emphasis">Out of stock</h3>
                         <h2 class="fs-5 text-muted" th:text="${outOfStock}"></h2>
                     </div>
                 </a>
@@ -175,8 +186,3 @@
 
 
 </html>
-
-
-
-
-

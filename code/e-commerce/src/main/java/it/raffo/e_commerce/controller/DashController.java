@@ -277,7 +277,7 @@ public class DashController {
 
     // CREATE
     @PostMapping("/insert")
-    public String store(@Valid @ModelAttribute("product") Prodotto productForm, BindingResult bindingresult,
+    public String store(@Valid @ModelAttribute("nuovoprodotto") Prodotto productForm, BindingResult bindingresult,
             Model model) {
 
         if (bindingresult.hasErrors()) {
@@ -290,7 +290,7 @@ public class DashController {
             model.addAttribute("category", categoryRepo.findAll());
             model.addAttribute("brand", brandRepo.findAll());
 
-            return "/dash/create";
+            return "/dash/home";
         }
 
         productRepo.save(productForm);

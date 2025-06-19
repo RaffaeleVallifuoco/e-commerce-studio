@@ -57,11 +57,8 @@ public class DashController {
         List<Prodotto> productList = new ArrayList<>();
 
         if (keyword != null && !keyword.isBlank()) {
-
             productList = productRepo.cercaProdotti(keyword);
-
         } else {
-
             productList = productRepo.findAll();
         }
 
@@ -82,6 +79,9 @@ public class DashController {
             aov = 0.0;
         model.addAttribute("aov", aov);
         model.addAttribute("orders", ordineRepo.count());
+        model.addAttribute("brand", brandRepo.findAll());
+
+        model.addAttribute("nuovoprodotto", new Prodotto());
 
         return "/dash/home";
     }

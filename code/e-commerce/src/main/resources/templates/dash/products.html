@@ -66,7 +66,7 @@
                                         <th scope="col" class="col-large">Prezzo</th>
                                         <th scope="col">Categoria</th>
                                         <th scope="col">Quantità</th>
-                                        <th scope="col">evidenza</th>
+                                        <th scope="col">Inevidenza</th>
                                         <th scope="col"></th>
                                         <th></th>
                                     </tr>
@@ -110,7 +110,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="mt-3" th:text="${product.evidence}">
+                                            <div class="mt-3 d-flex justify-content-center">
+                                                <button type="button"
+                                                    th:classappend="${product.evidence} ? 'btn btn-success btn-sm rounded-pill px-3' : 'btn btn-secondary btn-sm rounded-pill px-3'"
+                                                    disabled>
+                                                    <i class="bi" th:classappend="${product.evidence} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+                                                </button>
                                             </div>
                                         </td>
                                         <!-- BUTTONS -->
@@ -140,7 +145,7 @@
                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog my-5">
                                                     <div class="modal-content">
-                                                        <div class="modal-header card-bg">
+                                                        <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="staticBackdropLabel">
                                                                 Attenzione</h1>
                                                             <button type="button" class="btn-close"
@@ -152,9 +157,9 @@
                                                                 width="20%" height="auto"></img>
                                                         </div>
 
-                                                        <div class="modal-footer card-bg">
+                                                        <div class="modal-footer">
                                                             <form
-                                                                th:action="@{'/product/{id}/delete'(id=${product.id})}"
+                                                                th:action="@{'/dash/{id}/delete'(id=${product.id})}"
                                                                 method="post">
                                                                 <button type="button" class="btn btn-grey rounded"
                                                                     data-bs-dismiss="modal">Annulla</button>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,13 @@ import it.raffo.e_commerce.repository.UserRepo;
 import jakarta.validation.Valid;
 import it.raffo.e_commerce.repository.CategoryRepo;
 import it.raffo.e_commerce.repository.MarcaRepo;
+import it.raffo.e_commerce.repository.OrdineRepository;
 
 @Controller
 @RequestMapping("/dash")
 public class DashController {
+
+    private final DaoAuthenticationProvider authenticationProvider;
 
     @Autowired
     ProdottoRepo productRepo;
@@ -39,6 +43,13 @@ public class DashController {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    OrdineRepository ordineRepo;
+
+    DashController(DaoAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 
     @GetMapping("/home")
     public String dashboardHome(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
@@ -66,6 +77,11 @@ public class DashController {
         model.addAttribute("total", productRepo.countByAllIgnoreCase());
         model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
         model.addAttribute("runningOut", productRepo.countByQuantitaLessThan(20));
+        Double aov = ordineRepo.mediaOrdini();
+        if (aov == null)
+            aov = 0.0;
+        model.addAttribute("aov", aov);
+        model.addAttribute("orders", ordineRepo.count());
 
         return "/dash/home";
     }

@@ -1,6 +1,7 @@
 package it.raffo.e_commerce.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -55,6 +57,8 @@ public class Prodotto {
     @Column(name = "evidence")
     private boolean evidence;
 
+    @ManyToMany(mappedBy = "prodotti")
+    private Set<Ordine> ordini;
     // CONSTRUCTORS
 
     public Prodotto() {
@@ -146,6 +150,14 @@ public class Prodotto {
 
     public void setEvidence(boolean evidence) {
         this.evidence = evidence;
+    }
+
+    public Set<Ordine> getOrdini() {
+        return ordini;
+    }
+
+    public void setOrdini(Set<Ordine> ordini) {
+        this.ordini = ordini;
     }
 
     // TOSTRING - EQUALS - HASHCODE

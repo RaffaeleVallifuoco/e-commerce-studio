@@ -96,6 +96,13 @@ body::before {
     transition: margin-left 0.2s;
 }
 
+.detail-main-content {
+    margin-left: 10dvw;
+    padding: 10rem;
+    padding-top: 35rem;
+    transition: margin-left 0.2s;
+}
+
 .sidebar:hover~.main-content {
     margin-left: 220px;
 }

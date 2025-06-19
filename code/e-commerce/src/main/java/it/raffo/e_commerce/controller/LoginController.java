@@ -35,7 +35,13 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(username, password));
             if (auth.isAuthenticated()) {
                 request.getSession().setAttribute("user", auth.getPrincipal());
-                return new ModelAndView("redirect:");
+                boolean isAdmin = auth.getAuthorities().stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMIN"));
+                if (isAdmin) {
+                    return new ModelAndView("redirect:/dash/home");
+                } else {
+                    return new ModelAndView("redirect:/ciao");
+                }
             }
         } catch (AuthenticationException e) {
             return new ModelAndView("login", "error", "Invalid username or password");

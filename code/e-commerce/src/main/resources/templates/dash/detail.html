@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
+
+</html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sidebar Hover</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header>
+        <!-- SIDEBAR  -->
+        <div class="sidebar d-flex flex-column">
+            <div class="d-flex flex-column align-items-center py-3">
+                <img class="sidebar-img" th:src="@{/img/skillmart-logo.png}" alt="skillmart logo">
+                <h5 class="mt-2">skillMART</h5>
+            </div>
+            <a th:href="@{/dash/home}" class="nav-link">
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/dash/products}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Prodotti</span>
+            </a>
+            <a th:href="@{/dash/runningOut}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Running out</span>
+            </a>
+            <a th:href="@{/dash/outOfStock}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Out of stock</span>
+            </a>
+            <div class="mt-auto mb-2">
+                <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
+                <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                <a th:href="@{/logout}" class="nav-link mt-auto">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="container main-content">
+            <!-- TITLE  -->
+            <div class="col-12">
+                <div class="roe">
+                    <h1 th:text="${product.nome}"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo"
+                            class="img-fluid mx-auto">
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <p>
+                            <h4 th:text="${product.nome}"></h4>
+                            <h5 th:text="${product.descrizione}"></h5>
+                            <h5 th:text="${#numbers.formatDecimal(product.prezzo, 1, 'COMMA', 2, 'POINT') + ' €'}"></h5>
+                            <p>
+                                <span th:text="${product.marca.nome}"></span>
+                            </p>
+                            <p>
+                                <span th:text="${product.categoria.nome}"></span>
+                            </p>
+                        </p>
+                    </div>                  
+                        <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                            <p>
+                                <span>Presente in magazzino da : </span>
+                                <span th:text="${product.dataProduzione}"></span>
+                            </p>
+                            <p>
+                                <span>Quantità disponibile : </span>
+                                <span th:text="${product.quantita}"></span>
+                            </p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="evidenceSwitch" th:checked="${product.evidence}" disabled>
+                                <label class="form-check-label" for="evidenceSwitch">In evidenza</label>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap bundle -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz'
+        crossorigin='anonymous'></script>
+
+</body>
+
+
+</html>

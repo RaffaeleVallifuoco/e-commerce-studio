@@ -1,150 +1,119 @@
-<!DOCTYPE html>
+<DOCTYPE html>
+<html lang="en">
 <html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
 
+</html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Home</title>
-
-    <!-- Bootstrap CSS -->
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'
-        integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sidebar Hover</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <style>
-
-    </style>
-
-
 </head>
 
-
 <body>
-    <!-- ---------------------
-     -------HEADER--------   
-     --------------------- -->
-
-    <!-- HEADER -->
-    
     <header>
-        <nav class="navbar glass_nav">
-            <div class="container-fluid my-o py-0 ">
-                <a class="navbar-brand icon-link icon-link-hover fs-4 my-0 py-0 mx-5" th:href="@{/index/home}">
-                    <img th:src="@{/img/nozama_logo_white.png}" alt="nozama ogo" class="navbar-logo my-o py-0" width="90" />
-                </a>
-                <div class="me-auto mx-4">
-                    <ul class="list-unstyled d-flex">
-                        <li th:each="categories : ${category}">
-                            <a class="text-decoration-none text-white mx-4" th:text="${categories.nome}"
-                                th:href="@{'/product/show/' + ${categories.id}}">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-    
-                <form class="d-flex ms-auto w-25 opacity-50 position-relative" role="search" method="get"
-                    th:action="@{/index/home}">
-                    <input type="text" name="keyword" class="nav_input form-control text-white border-0  pe-5"
-                        placeholder="Cerca nel sito" aria-label="cerca" th:value="${keyword}">
-                    <a th:if="${keyword != null && !keyword.isEmpty()}" th:href="@{/index}"
-                        class="position-absolute end-0 top-50 translate-middle-y me-3 text-decoration-none ">
-                        <a class="navbar-brand icon-link icon-link-hover fs-4 my-0 py-0 mx-5" th:href="@{/index}">
-                            <img alt="nozama ogo" class="bi bi-x-circle navbar-logo my-o py-0" width="90" />
-                        </a>
-                    </a>
-                </form>
+        <!-- SIDEBAR  -->
+        <div class="sidebar d-flex flex-column">
+            <div class="d-flex flex-column align-items-center py-3">
+                <img class="sidebar-img" th:src="@{/img/skillmart-logo.png}" alt="skillmart logo">
+                <h5 class="mt-2">skillMART</h5>
             </div>
-        </nav>
-    </header>
-
-
-    <!-- ---------------------
-     --------MAIN---------   
-     --------------------- -->
-    <main>
-
-        <div class="container">
-            <div class="col-lg-12">
-                <!--  ROW -->
-                <div class="row">
-                    <!-- CARD FORM-->
-                    <div class="card mt-5 no-hover" style="width: 100%;">
-                        <div class="row g-0 justify-content-between">
-                            <div class="col-md-6">
-                                <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo"
-                                    class="img-fluid w-100 d-block mx-auto carousel_img"
-                                    style="object-fit: cover; height: auto; max-height: 5000px;">
-                            </div>
-                                <div class="col-md-4">
-                                    <form
-                                        th:action="@{${isUpdate} ? '/product/' + ${product.id} + '/edit' : '/product/insert'}"
-                                        method="post" th:object="${product}" class="glass p-4 mx-auto"
-                                        style="max-width: 480px;">
-                                        <div class="mb-3">
-                                            <label for="nome" class="form-label text-white fw-semibold">Nome
-                                                prodotto</label>
-                                            <input type="text" id="nome" th:field="*{nome}" class="form-control rounded-4"
-                                                placeholder="Inserisci il nome" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="descrizione"
-                                                class="form-label text-white fw-semibold">Descrizione</label>
-                                            <textarea id="descrizione" th:field="*{descrizione}"
-                                                class="form-control rounded-4" rows="3"
-                                                placeholder="Descrizione del prodotto"></textarea>
-                                        </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" id="evidence" th:field="*{evidence}"
-                                                class="form-check-input" />
-                                            <label for="evidence" class="form-check-label text-white">Evidenza</label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="categoria"
-                                                class="form-label text-white fw-semibold">Categoria</label>
-                                            <select id="categoria" th:field="*{categoria}" class="form-select rounded-4">
-                                                <option th:each="cat : ${category}" th:value="${cat.id}"
-                                                    th:text="${cat.nome}"></option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="marca" class="form-label text-white fw-semibold">Marca</label>
-                                            <select id="marca" th:field="*{marca}" class="form-select rounded-4">
-                                                <option th:each="marca : ${brand}" th:value="${marca.id}"
-                                                    th:text="${marca.nome}"></option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="prezzo" class="form-label text-white fw-semibold">Prezzo (€)</label>
-                                            <input type="number" id="prezzo" th:field="*{prezzo}" step="0.01"
-                                                class="form-control rounded-4" placeholder="0.00" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="quantita" class="form-label text-white fw-semibold">Quantità</label>
-                                            <input type="number" id="quantita" th:field="*{quantita}"
-                                                class="form-control rounded-4" placeholder="0" />
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="dataProduzione" class="form-label text-white fw-semibold">Data di
-                                                produzione</label>
-                                            <input type="date" id="dataProduzione" th:field="*{dataProduzione}"
-                                                class="form-control rounded-4" />
-                                        </div>
-                                        <button type="submit" class="btn btn-warning w-100 fw-semibold rounded-4"
-                                            th:text="${isUpdate} ? 'Aggiorna' : 'Inserisci'"></button>
-                                    </form>
-                                </div>
-                        </div>
-                    </div>
-                </div>
+            <a th:href="@{/dash/home}" class="nav-link">
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/dash/products}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Prodotti</span>
+            </a>
+            <a th:href="@{/dash/runningOut}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Running out</span>
+            </a>
+            <a th:href="@{/dash/outOfStock}" class="nav-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Out of stock</span>
+            </a>
+            <div class="mt-auto mb-2">
+                <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
+                <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                <a th:href="@{/logout}" class="nav-link mt-auto">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
 
+    </header>
 
+    <main>
+        <div class="container detail-main-content">
+            <!-- TITLE  -->
+            <div class="col-12">
+                <div class="roe">
+                    <h1>skillMart Dashboard</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <!-- FORM  -->
+                    <form th:action="@{${isUpdate} ? '/product/' + ${product.id} + '/edit' : '/product/insert'}" method="post"
+                        th:object="${product}" class="glass p-4 mx-auto" style="max-width: 480px;">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label text-white fw-semibold">Nome
+                                prodotto</label>
+                            <input type="text" id="nome" th:field="*{nome}" class="form-control rounded-4"
+                                placeholder="Inserisci il nome" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="descrizione" class="form-label text-white fw-semibold">Descrizione</label>
+                            <textarea id="descrizione" th:field="*{descrizione}" class="form-control rounded-4" rows="3"
+                                placeholder="Descrizione del prodotto"></textarea>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" id="evidence" th:field="*{evidence}" class="form-check-input" />
+                            <label for="evidence" class="form-check-label text-white">Evidenza</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label text-white fw-semibold">Categoria</label>
+                            <select id="categoria" th:field="*{categoria}" class="form-select rounded-4">
+                                <option th:each="cat : ${category}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca" class="form-label text-white fw-semibold">Marca</label>
+                            <select id="marca" th:field="*{marca}" class="form-select rounded-4">
+                                <option th:each="marca : ${brand}" th:value="${marca.id}" th:text="${marca.nome}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prezzo" class="form-label text-white fw-semibold">Prezzo (€)</label>
+                            <input type="number" id="prezzo" th:field="*{prezzo}" step="0.01" class="form-control rounded-4"
+                                placeholder="0.00" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantita" class="form-label text-white fw-semibold">Quantità</label>
+                            <input type="number" id="quantita" th:field="*{quantita}" class="form-control rounded-4" placeholder="0" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="dataProduzione" class="form-label text-white fw-semibold">Data di
+                                produzione</label>
+                            <input type="date" id="dataProduzione" th:field="*{dataProduzione}" class="form-control rounded-4" />
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 fw-semibold rounded-4"
+                            th:text="${isUpdate} ? 'Aggiorna' : 'Inserisci'"></button>
+                    </form>
+                </div>
+
+                <div class="col-4">
+                    <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo" class="img-fluid mx-auto">
+                </div>
+            </div>
+        </div>
     </main>
-
-
-
 
     <!-- Bootstrap bundle -->
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'
@@ -152,5 +121,4 @@
         crossorigin='anonymous'></script>
 
 </body>
-
 </html>

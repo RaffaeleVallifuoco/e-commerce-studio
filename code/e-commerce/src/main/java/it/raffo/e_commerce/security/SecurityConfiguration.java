@@ -25,9 +25,20 @@ public class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers("/tab/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
-                .formLogin(login -> login.loginPage("/login") // Pagina di login personalizzata
-                        .loginProcessingUrl("/authentication") // URL di elaborazione del login
-                        .defaultSuccessUrl("/index/home")
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .loginProcessingUrl("/authentication")
+                        .successHandler((request, response, authentication) -> {
+                            request.getSession().removeAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
+                            boolean isAdmin = authentication.getAuthorities().stream()
+                                    .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+                            if (isAdmin) {
+                                response.sendRedirect("/dash/home");
+                            } else {
+                                response.sendRedirect("/ciao");
+                            }
+                        })
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

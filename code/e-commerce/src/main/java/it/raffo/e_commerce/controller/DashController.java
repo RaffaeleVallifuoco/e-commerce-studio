@@ -73,7 +73,7 @@ public class DashController {
         model.addAttribute("category", categoryRepo.findAll());
         model.addAttribute("total", productRepo.countByAllIgnoreCase());
         model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
-        model.addAttribute("runningOut", productRepo.countByQuantitaLessThan(20));
+        model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
         Double aov = ordineRepo.mediaOrdini();
         if (aov == null)
             aov = 0.0;
@@ -136,7 +136,7 @@ public class DashController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
         model.addAttribute("category", categoryRepo.findAll());
-        model.addAttribute("runningOut", productRepo.findByQuantitaLessThan(10));
+        model.addAttribute("runningOut", productRepo.findByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
 
         return "/dash/runningout";
     }

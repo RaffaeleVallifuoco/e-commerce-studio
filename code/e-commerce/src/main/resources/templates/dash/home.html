@@ -23,6 +23,10 @@
                 <i class="bi bi-house-door"></i>
                 <span>Dashboard</span>
             </a>
+            <a th:href="@{/home/}" class="nav-link">
+                <i class="bi bi-bag"></i>
+                <span>Shop</span>
+            </a>
             <a th:href="@{/dash/products}" class="nav-link">
                 <i class="bi bi-bar-chart"></i>
                 <span>Prodotti</span>
@@ -133,24 +137,26 @@
                 </form>
             </div>
         </div>
+
+        <!-- MAIN CONTENT  -->
         <div class="row">
             <!-- LEFT COL -->
             <div class="col-8">
                 <a class="text-decoration-none" th:href="@{/dash/products}">
-                    <div class="jumbotron pe-5 py-5 text-center rounded-3 my-3">
+                    <div class="jumbotron pe-5 py-5 text-center  my-3">
                         <h1 class="text-body-emphasis">Prodotti in magazzino</h1>
                         <h2 class="fs-5 text-muted" th:text="${total}"></h2>
                     </div>
                 </a>
                 <div class="row my-4">
                     <div class="col-6">
-                            <div class="jumbotron px-3 py-4 text-center rounded-3 my-2">
+                            <div class="jumbotron px-3 py-4 text-center my-2">
                                 <h2 class="fs-6 text-body-emphasis">Ordini</h2>
                                 <h3 class="fs-6 text-muted" th:text="${orders}"></h3>
                             </div>
                     </div>
                     <div class="col-6">
-                            <div class="jumbotron px-3 py-4 text-center rounded-3 my-2">
+                            <div class="jumbotron px-3 py-4 text-center my-2">
                                 <h2 class="fs-6 text-body-emphasis">AOV</h2>
                                 <h3 class="fs-6 text-muted" th:text="${#numbers.formatDecimal(aov, 1, 'POINT', 2, 'POINT')} + ' €'">0.00 €</h3>
                             </div>
@@ -161,13 +167,13 @@
             <!-- RIGHT COL-->
             <div class="col-4">
                 <a class="text-decoration-none" th:href="@{/dash/runningOut}">
-                    <div class="jumbotron pe-5 py-5 text-center rounded-3 my-3">
+                    <div class="jumbotron pe-5 py-5 text-center my-3">
                         <h2 class="text-body-emphasis">Prodotti in esaurimento</h2>
                         <h2 class="fs-5 text-muted" th:text="${runningOut}"></h2>
                     </div>
                 </a>
                 <a class="text-decoration-none" th:href="@{/dash/outOfStock}">
-                    <div class="jumbotron pe-5 py-5 text-center rounded-3 my-3">
+                    <div class="jumbotron pe-5 py-5 text-center my-3">
                         <h3 class="text-body-emphasis">Out of stock</h3>
                         <h2 class="fs-5 text-muted" th:text="${outOfStock}"></h2>
                     </div>

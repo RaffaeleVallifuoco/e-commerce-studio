@@ -23,4 +23,8 @@ public interface ProdottoRepo extends JpaRepository<Prodotto, Integer> {
 
     List<Prodotto> findByQuantitaLessThan(Integer quantita);
 
+    List<Prodotto> findByQuantitaGreaterThanAndQuantitaLessThan(int min, int max);
+
+    int countByQuantitaGreaterThanAndQuantitaLessThan(int min, int max);
+
 }

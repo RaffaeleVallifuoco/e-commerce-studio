@@ -1,10 +1,40 @@
- body {
-     margin: 0;
-     background: linear-gradient(to bottom, #0d1117, #121212);
-     color: white;
-     font-family: 'Segoe UI', sans-serif;
-     overflow-x: hidden;
- }
+body {
+    margin: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(128, 0, 255, 0.196), transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 204, 0, 0.243), transparent 50%),
+                linear-gradient(to bottom, #0d1117, #121212);
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 40% 40%, rgba(128, 0, 255, 0.15), transparent 50%);
+    animation: float-bg 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes float-bg {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(5%, -5%) scale(1.05);
+    }
+    100% {
+        transform: translate(-5%, 5%) scale(1);
+    }
+}
 
  /* HERO SECTION */
  .hero {
@@ -191,4 +221,254 @@
 
  .category-block:hover {
      transform: scale(1.05);
+ }
+
+ .img-round {
+    min-width: 10 dvw;
+    max-width: 20 dvw;
+    border-radius: 4rem;
+ }
+
+ .sidebar {
+     position: fixed;
+     top: 0;
+     left: 0;
+     height: 100dvh;
+     width: 16dvw;
+     background: rgba(145, 146, 146, 0.139);
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border-top-right-radius: 24px;
+     border-bottom-right-radius: 24px;
+     transition: width 0.2s ease-in-out;
+     z-index: 1000;
+ }
+
+ .sidebar:hover {
+     width: 22dvw;
+ }
+
+ .sidebar .nav-link {
+     color: #adb5bd;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     padding: 1rem;
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+ }
+
+ .sidebar .nav-link:hover {
+     background-color: #495057;
+     color: #fff;
+ }
+
+ .sidebar .bi {
+     font-size: 1.25rem;
+ }
+
+ .main-content {
+     margin-left: 10dvw;
+     padding: 10rem;
+     transition: margin-left 0.2s;
+ }
+
+ .table-main-content {
+     margin-left: 10dvw;
+     padding: 10rem;
+     padding-top: 140rem;
+     transition: margin-left 0.2s;
+ }
+
+ .detail-main-content {
+     margin-left: 10dvw;
+     padding: 10rem;
+     padding-top: 35rem;
+     transition: margin-left 0.2s;
+ }
+
+ .sidebar:hover~.main-content {
+     margin-left: 220px;
+ }
+
+ .sidebar-img {
+     width: 25%;
+ }
+
+ .profile {
+     width: 5dvw;
+ }
+
+ /* JUMBOTRON  */
+ .jumbotron {
+     background-color: rgba(30, 30, 31, 0.422);
+     border-radius: 4rem;
+     transition: transform 0.3s ease-in-out;
+     /* transizione morbida */
+ }
+
+ .jumbotron:hover {
+     transform: scale(1.05);
+     /* ingrandisce del 5% */
+ }
+
+ /* TABLE */
+
+
+ .tab {
+     border-radius: 12px;
+     overflow: hidden;
+ }
+
+ .tab-foto img {
+     width: 80px;
+     height: 80px;
+     min-height: 29px;
+     object-fit: cover;
+     border-radius: 12px;
+ }
+
+ .table-responsive {
+     overflow-x: auto;
+     -webkit-overflow-scrolling: touch;
+ }
+
+ .col-descrizione {
+     min-width: 300px;
+ }
+
+
+
+ .col-large {
+     min-width: 200px;
+ }
+
+ table.table.tab tbody tr.low-quantity td {
+     background-color: #0627ff27 !important;
+     color: white;
+ }
+
+ table.table.tab tbody tr.out-stock td {
+     background-color: #af017e31 !important;
+     color: white;
+ }
+
+ /* MODAL  */
+
+ .modal {
+
+     background-color: rgba(30, 30, 31, 0.6);
+     border-radius: 1rem;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     color: white;
+     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+     border: 0;
+
+
+ }
+
+ .modal-content {
+     background-color: rgba(232, 6, 104, 0.21);
+     border-radius: 1rem;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     color: white;
+     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+     border: 0;
+ }
+
+ /* CARD  */
+
+ .card {
+     background-color: rgba(30, 30, 31, 0.4);
+     border-radius: 1rem;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+     color: white;
+ }
+
+ .card-bg {
+     background-color: rgba(255, 255, 255, 0.05);
+     border-radius: 3rem;
+ }
+
+ .card-header {
+     background-color: rgba(255, 255, 255, 0.08);
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+     border-top-left-radius: 1rem;
+     border-top-right-radius: 1rem;
+     color: white;
+     border-radius: 3rem;
+ }
+
+ /* INPUT  */
+
+ select,
+ input[type="text"],
+ input[type="password"],
+ input[type="date"],
+ input[type="number"] {
+     border-radius: 3rem;
+     background-color: rgba(203, 203, 203, 0.11);
+     color: white;
+     border: 1px solid rgba(255, 255, 255, 0);
+ }
+
+ .input-rounded {
+     border-radius: 0.5rem;
+     background-color: rgba(255, 255, 255, 0.05);
+     color: white;
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     padding: 0.5rem 1rem;
+ }
+
+ .input-rounded:focus {
+     background-color: rgba(255, 255, 255, 0.08);
+     outline: none;
+     box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+ }
+
+ .select-rounded {
+     border-radius: 0.5rem;
+     background-color: rgba(255, 255, 255, 0.05);
+     color: white;
+     border: 1px solid rgba(255, 255, 255, 0);
+     padding: 0.5rem 1rem;
+ }
+
+ .select-rounded:focus {
+     background-color: rgba(255, 255, 255, 0.08);
+     outline: none;
+     box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+ }
+
+ /* BUTTON  */
+
+ .btn-purple {
+     background-color: rgba(16, 60, 218, 0.416);
+     border-radius: 3rem;
+ }
+
+ .btn-blue {
+     background-color: rgba(2, 109, 185, 0.263);
+     border-radius: 3rem;
+ }
+
+
+ /* OFFCANVAS  */
+
+ .offcanvas {
+     background-color: rgba(30, 30, 31, 0.6);
+     border-radius: 1rem 0 0 1rem;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
+     color: white;
+     box-shadow: -8px 0 32px 0 rgba(0, 0, 0, 0.37);
  }

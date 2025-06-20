@@ -86,4 +86,24 @@ public class HomeController {
         return "/home/index";
     }
 
+    // FIND BY ID
+    @GetMapping("/detail/{id}")
+    public String getProductById(@PathVariable("id") Integer id,
+            Model model) {
+
+        Prodotto product = productRepo.getReferenceById(id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> currentUser = userRepo.findByUsername(username);
+        User user = currentUser.get();
+        model.addAttribute("user", user);
+        model.addAttribute("product", product);
+        model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+        model.addAttribute("category", categoryRepo.findAll());
+
+        return "home/product-detail";
+
+    }
+
 }

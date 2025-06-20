@@ -21,8 +21,8 @@ import it.raffo.e_commerce.repository.CategoryRepo;
 import it.raffo.e_commerce.repository.MarcaRepo;
 
 @Controller
-@RequestMapping("/index")
-public class IndexController {
+@RequestMapping("/home")
+public class HomeController {
 
     @Autowired
     ProdottoRepo productRepo;
@@ -36,7 +36,7 @@ public class IndexController {
     @Autowired
     UserRepo userRepo;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String index(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
         List<Prodotto> productList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class IndexController {
         model.addAttribute("evidence", evidenceList);
         model.addAttribute("category", categoryRepo.findAll());
 
-        return "/home/index";
+        return "/home/home";
     }
 
     @GetMapping("/home/{category_id}")

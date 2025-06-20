@@ -9,7 +9,7 @@
  /* HERO SECTION */
  .hero {
      position: relative;
-    animation: heroZoomIn 1.8s ease-out forwards;
+     animation: heroZoomIn 1.8s ease-out forwards;
      height: 100dvh;
      background-image: url('/img/back.jpg');
      background-size: cover;
@@ -17,6 +17,7 @@
      background-repeat: no-repeat;
      z-index: 0;
  }
+
  @keyframes heroZoomIn {
      0% {
          transform: scale(1.05);
@@ -38,25 +39,25 @@
      z-index: 1;
  }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom,
-            #0d111789 0%,
-            /* colore solido sopra */
-            rgba(13, 17, 23, 0.499) 5%,
-            /* fade leggero verso trasparenza */
-            rgba(0, 0, 0, 0) 40%,
-            /* centro completamente trasparente */
-            rgba(0, 0, 0, 0.5) 85%,
-            /* ricomincia a scurirsi */
-            #0d1117 100%
-            /* chiusura totale sotto */
-        );
-    z-index: 2;
-    pointer-events: none;
-}
+ .hero::after {
+     content: "";
+     position: absolute;
+     inset: 0;
+     background: linear-gradient(to bottom,
+             #0d111789 0%,
+             /* colore solido sopra */
+             rgba(13, 17, 23, 0.499) 5%,
+             /* fade leggero verso trasparenza */
+             rgba(0, 0, 0, 0) 40%,
+             /* centro completamente trasparente */
+             rgba(0, 0, 0, 0.5) 85%,
+             /* ricomincia a scurirsi */
+             #0d1117 100%
+             /* chiusura totale sotto */
+         );
+     z-index: 2;
+     pointer-events: none;
+ }
 
 
  /* NAVBAR */
@@ -89,6 +90,61 @@
      color: white;
      text-align: center;
      border-radius: 2rem;
+ }
+
+ .category-block {
+     position: relative;
+     height: 200px;
+     border-radius: 2rem;
+     color: white;
+     font-size: 1.5rem;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transition: transform 0.2s ease;
+     background-size: cover;
+     background-position: center;
+     overflow: hidden;
+ }
+
+ /* Overlay per migliorare leggibilità */
+ .category-block::before {
+     content: "";
+     position: absolute;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.215);
+     border-radius: 2rem;
+     z-index: 0;
+ }
+
+ .category-block>* {
+     position: relative;
+     z-index: 1;
+ }
+
+ /* Background immagini per categoria */
+ .category-block.bg-primary {
+     background-image: url('/img/elettronica.jpg');
+     background-size: cover;
+ }
+
+ .category-block.bg-success {
+     background-image: url('/img/back2.jpg');
+     background-size: cover;
+ }
+
+ .category-block.bg-danger {
+     background-image: url('/img/accessori2.jpg');
+     background-size: cover;
+ }
+
+ /* Hover: un po' di zoom e overlay più scuro */
+ .category-block:hover::before {
+     background: rgba(0, 0, 0, 0.516);
+ }
+
+ .category-block:hover {
+     transform: scale(1.05);
  }
 
  /* PRODUCT CARD */

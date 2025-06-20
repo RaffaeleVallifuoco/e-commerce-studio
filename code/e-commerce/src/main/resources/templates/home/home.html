@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
+
 
 <head>
     <meta charset="UTF-8">
@@ -12,6 +14,7 @@
     <link
         href="https://themes.getbootstrap.com/wp-content/plugins/dokan-lite/assets/vendors/font-awesome/font-awesome.min.css"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link th:href="@{/css/home-style.css}" rel="stylesheet">
 </head>
 
@@ -48,10 +51,10 @@
         </div>
     </header>
 
-    <!-- Macro categorie -->
+    <!--JUMBO MACRO-->
     <section class="jumbotron-full">
         <div class="container">
-            <h2>Scopri le nostre categorie</h2>
+            <h2>Categorie in evidenza</h2>
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="category-block bg-primary">Elettronica</div>
@@ -69,34 +72,14 @@
     <!-- Carousel Prodotti -->
     <section class="carousel-container container">
         <h2 class="text-center mb-4">Prodotti in evidenza</h2>
-        <div id="prodCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
-            <div class="carousel-inner">
-                <!-- Prima slide -->
-                <div class="carousel-item active">
-                    <div class="row">
-                        <!-- 4 card -->
-                        <div class="col-md-3">
-                            <div class="product-card"><img src="https://via.placeholder.com/300x200" alt=""></div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="product-card"><img src="https://via.placeholder.com/300x200" alt=""></div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="product-card"><img src="https://via.placeholder.com/300x200" alt=""></div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="product-card"><img src="https://via.placeholder.com/300x200" alt=""></div>
-                        </div>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" th:each="product : ${evidence}">
+                    <div class="product-card">
+                        <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo"
                     </div>
                 </div>
-                <!-- Aggiungi altre .carousel-item con .row -->
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#prodCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#prodCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
         </div>
     </section>
 
@@ -127,6 +110,20 @@
                 prevScrollpos = currentScrollPos;
             }
         };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            loop: true,
+            speed: 20000,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false,
+            },
+            freeMode: false,
+        });
     </script>
 </body>
 

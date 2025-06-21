@@ -3,7 +3,9 @@ package it.raffo.e_commerce.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +108,17 @@ public class DashController {
 
         model.addAttribute("dateLabels", dateLabels);
         model.addAttribute("totalePrezzi", totalePrezzi);
+
+        List<Object[]> ordiniPerSesso = ordineRepo.countOrdiniPerSesso();
+        Map<String, Long> sessoCount = new HashMap<>();
+
+        for (Object[] riga : ordiniPerSesso) {
+            String sesso = riga[0].toString(); // "M" o "F"
+            Long count = (Long) riga[1];
+            sessoCount.put(sesso, count);
+        }
+
+        model.addAttribute("ordiniPerSesso", sessoCount);
 
         return "/dash/home";
     }

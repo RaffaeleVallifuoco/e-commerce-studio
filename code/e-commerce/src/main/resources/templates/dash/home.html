@@ -221,6 +221,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- FOURTH ROW  -->
+                     <div class="row">
+                        <div class="card p-4 mt-4">
+                            <h5 class="mb-3">Distribuzione ordini per sesso</h5>
+                            <canvas id="chartSesso" width="100%" height="100"></canvas>
+                        </div>
+                     </div>
                 </div>
             </main>
         </div>
@@ -253,6 +260,49 @@
                         borderColor: 'rgba(54, 162, 235, 1)',
                         fill: false
                     }]
+                }
+            });
+        </script>
+        <canvas id="chartSesso" width="100%" height="100"></canvas>
+        
+        <script th:inline="javascript">
+            let sessoLabels = Object.keys(/*[[${ordiniPerSesso}]]*/{});
+            let sessoData = Object.values(/*[[${ordiniPerSesso}]]*/{});
+
+            const ctxSesso = document.getElementById('chartSesso').getContext('2d');
+            new Chart(ctxSesso, {
+                type: 'doughnut',
+                data: {
+                    labels: sessoLabels,
+                    datasets: [{
+                        data: sessoData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)' ,   // Femmine (rosa)
+                            'rgba(54, 162, 235, 0.7)'  // Maschi (azzurro)
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                    let value = context.raw;
+                                    let percent = ((value / total) * 100).toFixed(1);
+                                    return `${context.label}: ${value} ordini (${percent}%)`;
+                                }
+                            }
+                        }
+                    }
                 }
             });
         </script>

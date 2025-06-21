@@ -17,4 +17,7 @@ public interface OrdineRepository extends JpaRepository<Ordine, Integer> {
     @Query("SELECT o.dataOrdine, SUM(o.prezzoTotale) FROM Ordine o GROUP BY o.dataOrdine ORDER BY o.dataOrdine")
     List<Object[]> getVenditePerData();
 
+    @Query("SELECT u.sesso, COUNT(o) FROM Ordine o JOIN o.user u GROUP BY u.sesso")
+    List<Object[]> countOrdiniPerSesso();
+
 }

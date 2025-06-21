@@ -86,6 +86,7 @@ body::before {
 .main-content {
     margin-left: 10dvw;
     padding: 10rem;
+    padding-top: 130dvh;
     transition: margin-left 0.2s;
 }
 
@@ -130,7 +131,7 @@ body::before {
 }
 
 .jumbotron:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
     /* ingrandisce del 5% */
 }
 
@@ -171,7 +172,7 @@ table.table.tab tbody tr.low-quantity td {
 }
 
 table.table.tab tbody tr.out-stock td {
-    background-color: #af017e31 !important;
+    background-color: #cf025b31 !important;
     color: white;
 }
 

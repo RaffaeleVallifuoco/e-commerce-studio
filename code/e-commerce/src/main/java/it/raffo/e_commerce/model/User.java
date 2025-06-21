@@ -4,11 +4,15 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -35,24 +39,23 @@ public class User {
     @Column(name = "photo")
     private String photoPath;
 
-    public String getPhotoPath() {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-
     @NotBlank(message = "Campo Obbligatorio")
     @Column(name = "email", length = 60, nullable = false)
     private String email;
+
+    public enum Sesso {
+        M, F
+    }
+
+    @Enumerated(EnumType.STRING)
+    private Sesso sesso;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     // -----------------------------------
-    // -------- GETTERS & SETTERS --------
-    // -----------------------------------
+    // -------- GETTERS & SETTERS -------  
+    // ----------------------------------- 
 
     public String getEmail() {
         return email;
@@ -100,6 +103,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public Sesso getSesso() {
+        return sesso;
+    }
+
+    public void setSesso(Sesso sesso) {
+        this.sesso = sesso;
+    }
+
+    // TOSTRING
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
+                + ", photoPath=" + photoPath + ", email=" + email + ", roles=" + roles + "]";
     }
 
 }

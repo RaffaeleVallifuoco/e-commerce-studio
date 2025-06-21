@@ -1,5 +1,7 @@
 package it.raffo.e_commerce.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,5 +13,8 @@ public interface OrdineRepository extends JpaRepository<Ordine, Integer> {
 
     @Query("SELECT AVG(o.prezzoTotale) FROM Ordine o")
     Double mediaOrdini();
+
+    @Query("SELECT o.dataOrdine, SUM(o.prezzoTotale) FROM Ordine o GROUP BY o.dataOrdine ORDER BY o.dataOrdine")
+    List<Object[]> getVenditePerData();
 
 }

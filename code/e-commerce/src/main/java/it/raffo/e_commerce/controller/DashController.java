@@ -1,5 +1,7 @@
 package it.raffo.e_commerce.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import it.raffo.e_commerce.model.Prodotto;
 import it.raffo.e_commerce.model.User;
+import it.raffo.e_commerce.model.User.Sesso;
 import it.raffo.e_commerce.repository.ProdottoRepo;
 import it.raffo.e_commerce.repository.UserRepo;
 import jakarta.validation.Valid;
@@ -74,14 +77,35 @@ public class DashController {
         model.addAttribute("total", productRepo.countByAllIgnoreCase());
         model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
         model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
+        model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
+        model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
         Double aov = ordineRepo.mediaOrdini();
         if (aov == null)
             aov = 0.0;
         model.addAttribute("aov", aov);
         model.addAttribute("orders", ordineRepo.count());
         model.addAttribute("brand", brandRepo.findAll());
-
         model.addAttribute("nuovoprodotto", new Prodotto());
+
+        // GRAFICO VENDITE
+
+        List<Object[]> vendite = ordineRepo.getVenditePerData();
+
+        List<String> dateLabels = new ArrayList<>();
+        List<Double> totalePrezzi = new ArrayList<>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (Object[] riga : vendite) {
+            LocalDate data = (LocalDate) riga[0];
+            Double somma = (Double) riga[1];
+
+            dateLabels.add(data.format(formatter));
+            totalePrezzi.add(somma);
+        }
+
+        model.addAttribute("dateLabels", dateLabels);
+        model.addAttribute("totalePrezzi", totalePrezzi);
 
         return "/dash/home";
     }

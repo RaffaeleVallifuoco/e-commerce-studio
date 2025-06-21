@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +31,10 @@ public class Ordine {
     @JoinTable(name = "ordine_prodotto", joinColumns = @JoinColumn(name = "ordine_id"), inverseJoinColumns = @JoinColumn(name = "prodotto_id"))
     private Set<Prodotto> prodotti;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     // CONSTRUCTORS
 
     public Ordine() {
@@ -46,6 +51,18 @@ public class Ordine {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDate getDataOrdine() {

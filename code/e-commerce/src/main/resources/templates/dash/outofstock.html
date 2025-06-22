@@ -48,12 +48,26 @@
             </div>
         </aside>
 
-        <main class="main-content">
+        <main class="table-main-content">
             <div class="no-container ms-5">
                 <!-- TITLE  -->
+                <div class="row justify-content-between align-items-center mb-4">
+                    <div class="col-auto
+                                    ">
+                        <h1>Prodotti esauriti</h1>
+                    </div>
+                    <div class="col-auto">
+                        <form th:action="@{/dash/products}" method="get" class="d-flex align-items-center gap-2">
+                            <input type="text" name="keyword" th:value="${keyword}" class="form-control"
+                                placeholder="Cerca prodotto..." />
+                            <button type="submit" class="btn btn-blue">
+                                <i class="bi bi-search fs-4"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <div class="col-12 ms-5">
                     <div class="row">
-                        <h1>Prodotti esauriti</h1>
                         <!-- TABLE -->
                         <div class="card">
                             <div class="card-body card-scrollable card-bg table-responsive">
@@ -177,7 +191,12 @@
                     </div>
                 </div>
             </div>
-        </main>
+            <footer class="text-center mt-2 text-white-50">
+                &copy; 2025 skillMart – Tutti i diritti riservati.
+                <a class="text-muted text-decoration-none" href="https://github.com/RaffaeleVallifuoco" target="_blank"
+                    rel="noopener noreferrer">Visit my Github page</a>
+                </main>
+            </footer>
     </div>
 
     <!-- Bootstrap bundle -->

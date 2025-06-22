@@ -91,7 +91,7 @@ body::before {
 }
 
 .table-main-content {
-    margin-left: 10dvw;
+    margin-left: 15dvw;
     padding: 10rem;
     padding-top: 300dvh;
     transition: margin-left 0.2s;

@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <html xmlns:th='http://www.thymeleaf.org' data-bs-theme="dark" lang=en>
 
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-8">
                     <!-- FORM  -->
-                    <form th:action="@{${isUpdate} ? '/product/' + ${product.id} + '/edit' : '/product/insert'}" method="post"
+                    <form th:action="@{/dash/{id}/edit(id=${product.id})}" method="post"
                         th:object="${product}" class="glass p-4 mx-auto" style="max-width: 480px;">
                         <div class="mb-3">
                             <label for="nome" class="form-label text-white fw-semibold">Nome

@@ -56,25 +56,16 @@ public class DashController {
         this.authenticationProvider = authenticationProvider;
     }
 
+    // HOME
+
     @GetMapping("/home")
     public String dashboardHome(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
-
-        List<Prodotto> productList = new ArrayList<>();
-
-        if (keyword != null && !keyword.isBlank()) {
-            productList = productRepo.cercaProdotti(keyword);
-        } else {
-            productList = productRepo.findAll();
-        }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
         model.addAttribute("user", user);
-        model.addAttribute("list", productList);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("evidence", productRepo.findByEvidenceTrue());
         model.addAttribute("category", categoryRepo.findAll());
         model.addAttribute("total", productRepo.countByAllIgnoreCase());
         model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
@@ -122,6 +113,8 @@ public class DashController {
 
         return "/dash/home";
     }
+
+    // PFODUCT FIND ALL
 
     @GetMapping("/products")
     public String productsList(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
@@ -206,6 +199,8 @@ public class DashController {
         return "/dash/outofstock";
     }
 
+    // SEARCH BY CATEGORY
+
     @GetMapping("/home/{category_id}")
     public String getCategory(@PathVariable("category_id") Integer categoryId,
             Model model) {
@@ -226,6 +221,8 @@ public class DashController {
         return "/dash/home";
     }
 
+    // PRODUCT DETAIL
+
     @GetMapping("/show/{id}")
     public String getProductById(@PathVariable("id") Integer id,
             Model model) {
@@ -245,9 +242,9 @@ public class DashController {
 
     }
 
-    // FORM INSERT / UPDATE
-    @GetMapping({ "/form", "/form/{id}" })
-    public String productForm(@PathVariable(required = false) Integer id, Model model) {
+    // FORM UPDATE
+    @GetMapping({ "/form/{id}" })
+    public String productForm(@PathVariable(required = true) Integer id, Model model) {
         if (id != null) {
             Prodotto product = productRepo.findById(id).orElse(new Prodotto());
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -259,17 +256,7 @@ public class DashController {
             model.addAttribute("category", categoryRepo.findAll());
             model.addAttribute("isUpdate", true);
             model.addAttribute("brand", brandRepo.findAll());
-        } else {
-            model.addAttribute("product", new Prodotto());
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<User> currentUser = userRepo.findByUsername(username);
-        User user = currentUser.get();
-        model.addAttribute("user", user);
-        model.addAttribute("brand", brandRepo.findAll());
-        model.addAttribute("category", categoryRepo.findAll());
-        model.addAttribute("isUpdate", false);
 
         return "/dash/form"; //
     }
@@ -286,8 +273,19 @@ public class DashController {
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
             model.addAttribute("user", user);
-            model.addAttribute("evidence", productRepo.findByEvidenceTrue());
             model.addAttribute("category", categoryRepo.findAll());
+            model.addAttribute("total", productRepo.countByAllIgnoreCase());
+            model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
+            model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
+            model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
+            model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
+            Double aov = ordineRepo.mediaOrdini();
+            if (aov == null)
+                aov = 0.0;
+            model.addAttribute("aov", aov);
+            model.addAttribute("orders", ordineRepo.count());
+            model.addAttribute("brand", brandRepo.findAll());
+            model.addAttribute("nuovoprodotto", new Prodotto());
 
             return "/{id}/edit";
         }
@@ -327,12 +325,12 @@ public class DashController {
             model.addAttribute("category", categoryRepo.findAll());
             model.addAttribute("brand", brandRepo.findAll());
 
-            return "/dash/home";
+            return "/dash/products";
         }
 
         productRepo.save(productForm);
 
-        return "redirect:/dash/home";
+        return "redirect:/dash/products";
 
     }
 
@@ -342,7 +340,7 @@ public class DashController {
 
         productRepo.deleteById(id);
 
-        return "redirect:/dash/home";
+        return "redirect:/dash/products";
     }
 
 }

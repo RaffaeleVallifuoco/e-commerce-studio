@@ -90,43 +90,46 @@ public class ProductController {
         return "/tab/form"; //
     }
 
-    // UPDATE
-    @PostMapping("/{id}/edit")
-    public String Update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Prodotto productUpdate,
-            BindingResult bindingresult,
-            Model model) {
+    // // UPDATE
+    // @PostMapping("/{id}/edit")
+    // public String Update(@PathVariable("id") Integer id, @Valid
+    // @ModelAttribute("ticket") Prodotto productUpdate,
+    // BindingResult bindingresult,
+    // Model model) {
 
-        if (bindingresult.hasErrors()) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-            Optional<User> currentUser = userRepo.findByUsername(username);
-            User user = currentUser.get();
-            model.addAttribute("user", user);
-            model.addAttribute("evidence", productRepo.findByEvidenceTrue());
-            model.addAttribute("category", categoryRepo.findAll());
+    // if (bindingresult.hasErrors()) {
+    // Authentication authentication =
+    // SecurityContextHolder.getContext().getAuthentication();
+    // String username = authentication.getName();
+    // Optional<User> currentUser = userRepo.findByUsername(username);
+    // User user = currentUser.get();
+    // model.addAttribute("user", user);
+    // model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+    // model.addAttribute("category", categoryRepo.findAll());
 
-            return "/{id}/edit";
-        }
-        Prodotto existingProduct = productRepo.getReferenceById(id);
+    // return "/{id}/edit";
+    // }
+    // Prodotto existingProduct = productRepo.getReferenceById(id);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<User> currentUser = userRepo.findByUsername(username);
-        User user = currentUser.get();
-        model.addAttribute("user", user);
-        existingProduct.setNome(productUpdate.getNome());
-        existingProduct.setDescrizione(productUpdate.getDescrizione());
-        existingProduct.setEvidence(productUpdate.isEvidence());
-        existingProduct.setCategoria(productUpdate.getCategoria());
-        existingProduct.setMarca(productUpdate.getMarca());
-        existingProduct.setPrezzo(productUpdate.getPrezzo());
-        existingProduct.setQuantita(productUpdate.getQuantita());
-        existingProduct.setDataProduzione(productUpdate.getDataProduzione());
+    // Authentication authentication =
+    // SecurityContextHolder.getContext().getAuthentication();
+    // String username = authentication.getName();
+    // Optional<User> currentUser = userRepo.findByUsername(username);
+    // User user = currentUser.get();
+    // model.addAttribute("user", user);
+    // existingProduct.setNome(productUpdate.getNome());
+    // existingProduct.setDescrizione(productUpdate.getDescrizione());
+    // existingProduct.setEvidence(productUpdate.isEvidence());
+    // existingProduct.setCategoria(productUpdate.getCategoria());
+    // existingProduct.setMarca(productUpdate.getMarca());
+    // existingProduct.setPrezzo(productUpdate.getPrezzo());
+    // existingProduct.setQuantita(productUpdate.getQuantita());
+    // existingProduct.setDataProduzione(productUpdate.getDataProduzione());
 
-        productRepo.save(existingProduct);
+    // productRepo.save(existingProduct);
 
-        return "redirect:/product/show/{id}";
-    }
+    // return "redirect:/product/show/{id}";
+    // }
 
     // CREATE
     @PostMapping("/insert")

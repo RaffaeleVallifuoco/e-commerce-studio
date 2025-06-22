@@ -246,7 +246,7 @@ public class DashController {
     @GetMapping({ "/form/{id}" })
     public String productForm(@PathVariable(required = true) Integer id, Model model) {
         if (id != null) {
-            Prodotto product = productRepo.findById(id).orElse(new Prodotto());
+            Prodotto product = productRepo.getReferenceById(id);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             Optional<User> currentUser = userRepo.findByUsername(username);
@@ -263,7 +263,7 @@ public class DashController {
 
     // UPDATE
     @PostMapping("/{id}/edit")
-    public String Update(@PathVariable("id") Integer id, @Valid @ModelAttribute("ticket") Prodotto productUpdate,
+    public String Update(@PathVariable("id") Integer id, @Valid @ModelAttribute("product") Prodotto productUpdate,
             BindingResult bindingresult,
             Model model) {
 
@@ -273,21 +273,8 @@ public class DashController {
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
             model.addAttribute("user", user);
-            model.addAttribute("category", categoryRepo.findAll());
-            model.addAttribute("total", productRepo.countByAllIgnoreCase());
-            model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
-            model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
-            model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
-            model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
-            Double aov = ordineRepo.mediaOrdini();
-            if (aov == null)
-                aov = 0.0;
-            model.addAttribute("aov", aov);
-            model.addAttribute("orders", ordineRepo.count());
-            model.addAttribute("brand", brandRepo.findAll());
-            model.addAttribute("nuovoprodotto", new Prodotto());
 
-            return "/{id}/edit";
+            return "/dash/form";
         }
         Prodotto existingProduct = productRepo.getReferenceById(id);
 

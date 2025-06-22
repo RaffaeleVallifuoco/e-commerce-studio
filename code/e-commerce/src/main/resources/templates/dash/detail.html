@@ -59,14 +59,14 @@
             </div>
             <div class="row">
                 <div class="col-5">
-                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                    <div class="-detail pe-5, py-5 text-centerrounded-3 my-3">
                         <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo"
                             class="img-fluid mx-auto">
                     </div>
                 </div>
 
                 <div class="col-6">
-                    <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                    <div class="-detail pe-5, py-5 text-centerrounded-3 my-3">
                         <p>
                             <h4 th:text="${product.nome}"></h4>
                             <h5 th:text="${product.descrizione}"></h5>
@@ -79,7 +79,7 @@
                             </p>
                         </p>
                     </div>                  
-                        <div class="jumbotron pe-5, py-5 text-centerrounded-3 my-3">
+                        <div class="-detail pe-5, py-5 text-centerrounded-3 my-3">
                             <p>
                                 <span>Presente in magazzino da : </span>
                                 <span th:text="${product.dataProduzione}"></span>

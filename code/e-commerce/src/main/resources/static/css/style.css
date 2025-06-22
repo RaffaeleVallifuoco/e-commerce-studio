@@ -141,6 +141,18 @@ body::before {
     text-align: center;
 }
 
+.jumbotron-detail {
+    background-color: rgba(30, 30, 31, 0.422);
+    border-radius: 4rem;
+    transition: transform 0.3s ease-in-out;
+    height: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .jumbotron:hover {
     transform: scale(1.08);
     /* ingrandisce del 5% */

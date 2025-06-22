@@ -93,7 +93,7 @@ body::before {
 .table-main-content {
     margin-left: 15dvw;
     padding: 10rem;
-    padding-top: 300dvh;
+    padding-top: 320dvh;
     transition: margin-left 0.2s;
 }
 

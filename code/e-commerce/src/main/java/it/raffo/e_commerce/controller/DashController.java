@@ -311,9 +311,57 @@ public class DashController {
             model.addAttribute("user", user);
             model.addAttribute("category", categoryRepo.findAll());
             model.addAttribute("brand", brandRepo.findAll());
+            model.addAttribute("openOffcanvas", true);
 
-            return "/dash/products";
+            // Attributi home
+
+            model.addAttribute("category", categoryRepo.findAll());
+            model.addAttribute("total", productRepo.countByAllIgnoreCase());
+            model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
+            model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
+            model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
+            model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
+            Double aov = ordineRepo.mediaOrdini();
+            if (aov == null)
+                aov = 0.0;
+            model.addAttribute("aov", aov);
+            model.addAttribute("orders", ordineRepo.count());
+            model.addAttribute("brand", brandRepo.findAll());
+
+            // GRAFICO VENDITE
+
+            List<Object[]> vendite = ordineRepo.getVenditePerData();
+
+            List<String> dateLabels = new ArrayList<>();
+            List<Double> totalePrezzi = new ArrayList<>();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            for (Object[] riga : vendite) {
+                LocalDate data = (LocalDate) riga[0];
+                Double somma = (Double) riga[1];
+
+                dateLabels.add(data.format(formatter));
+                totalePrezzi.add(somma);
+            }
+
+            model.addAttribute("dateLabels", dateLabels);
+            model.addAttribute("totalePrezzi", totalePrezzi);
+
+            List<Object[]> ordiniPerSesso = ordineRepo.countOrdiniPerSesso();
+            Map<String, Long> sessoCount = new HashMap<>();
+
+            for (Object[] riga : ordiniPerSesso) {
+                String sesso = riga[0].toString(); // "M" o "F"
+                Long count = (Long) riga[1];
+                sessoCount.put(sesso, count);
+            }
+
+            model.addAttribute("ordiniPerSesso", sessoCount);
+
+            return "/dash/home";
         }
+        model.addAttribute("nuovoprodotto", productForm); // contiene gli errori
 
         productRepo.save(productForm);
 

@@ -60,8 +60,7 @@
             <div class="row">
                 <div class="col-5">
                     <div class="-detail pe-5, py-5 text-centerrounded-3 my-3">
-                        <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}" alt="Photo"
-                            class="img-fluid mx-auto">
+                        <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" product-img shadow-sm img-fluid mx-auto" th:alt="${product.nome}">
                     </div>
                 </div>
 

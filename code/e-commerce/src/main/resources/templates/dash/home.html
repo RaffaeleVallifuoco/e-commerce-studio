@@ -40,7 +40,7 @@
                 </a>
                 <div class="mt-auto mb-2">
                     <span class="mt-auto ms-3" th:text="Ciao + ' ' + ${user.username}"></span>
-                    <img class="profile" th:src="@{/img/profile1.png}" alt="">
+                    <img class="profile" th:src="${'/uploads/' + user.photoPath}" alt="Foto profilo" />
                     <a th:href="@{/logout}" class="nav-link mt-auto">
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Logout</span>
@@ -81,7 +81,8 @@
                         </div>
                         <div class="offcanvas-body">
                             <!-- FORM  -->
-                            <form th:action="@{/dash/insert}" th:object="${nuovoprodotto}" method="post">
+                            <form th:action="@{/dash/insert}" enctype="multipart/form-data" th:object="${nuovoprodotto}"
+                                method="post">
 
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome prodotto</label>
@@ -92,7 +93,10 @@
                                         th:errors="*{nome}">
                                     </div>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label for="file">Immagine Prodotto</label>
+                                    <input type="file" id="photoPath" name="file" class="form-control" />
+                                </div>
                                 <div class="mb-3">
                                     <label for="descrizione" class="form-label">Descrizione</label>
                                     <textarea id="descrizione" th:field="*{descrizione}" class="form-control" rows="3"
@@ -224,12 +228,12 @@
                 </div>
             </main>
         </div>
-    <footer class="text-center mt-2 text-white-50">
-        &copy; 2025 skillMart – Tutti i diritti riservati.
-        <a class="text-muted text-decoration-none" href="https://github.com/RaffaeleVallifuoco" target="_blank"
-            rel="noopener noreferrer">Visit my Github page</a>
+        <footer class="text-center mt-2 text-white-50">
+            &copy; 2025 skillMart – Tutti i diritti riservati.
+            <a class="text-muted text-decoration-none" href="https://github.com/RaffaeleVallifuoco" target="_blank"
+                rel="noopener noreferrer">Visit my Github page</a>
         </footer>
-    </main>
+        </main>
     </body>
 
 

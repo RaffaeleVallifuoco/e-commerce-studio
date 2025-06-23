@@ -92,7 +92,7 @@
             <div th:if="${stat.index % 2 == 0}" class="text-decoration-none row align-items-center mb-5">
                 <div class="col-md-6">
                     <a th:href="@{/home/detail/{id}(id=${product.id})}">
-                        <img class=" product-img shadow-sm" th:src="@{/img/{img}(img=${product.photoPath})}"
+                        <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" product-img shadow-sm"
                             th:alt="${product.nome}">
                     </a>
                 </div>
@@ -106,8 +106,9 @@
             <div th:if="${stat.index % 2 != 0}" class="row align-items-center flex-row-reverse mb-5">
                 <div class="col-md-6">
                     <a th:href="@{/home/detail/{id}(id=${product.id})}">
-                        <img class="product-img img-fluid  shadow-sm" th:src="@{/img/{img}(img=${product.photoPath})}"
-                            th:alt="${product.nome}">
+                        <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" product-img shadow-sm"
+                        th:alt="${product.nome}">
+                            
                     </a>
                 </div>
                 <div class="col-md-6">
@@ -128,7 +129,7 @@
                 <div class="swiper-slide" th:each="product : ${evidence}">
                     <a class="text-decoration-none" th:href="@{/home/detail/{id}(id=${product.id})}">
                         <div class="product-card">
-                            <img th:src="@{/img/{img}(img=${product.photoPath})}" alt="Prodotto">
+                            <img th:src="@{/uploads/{img}(img=${product.photoPath})}" alt="Prodotto">
                         </div>
                     </a>
                 </div>

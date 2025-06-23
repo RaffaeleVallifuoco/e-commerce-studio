@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import it.raffo.e_commerce.model.Prodotto;
 import it.raffo.e_commerce.model.User;
 import it.raffo.e_commerce.model.User.Sesso;
@@ -263,8 +264,10 @@ public class DashController {
 
     // UPDATE
     @PostMapping("/{id}/edit")
-    public String Update(@PathVariable("id") Integer id, @Valid @ModelAttribute("product") Prodotto productUpdate,
+    public String Update(@PathVariable("id") Integer id,
+            @Valid @ModelAttribute("product") Prodotto productUpdate,
             BindingResult bindingresult,
+            @RequestParam("file") MultipartFile file,
             Model model) {
 
         if (bindingresult.hasErrors()) {
@@ -273,9 +276,9 @@ public class DashController {
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
             model.addAttribute("user", user);
-
             return "/dash/form";
         }
+
         Prodotto existingProduct = productRepo.getReferenceById(id);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -283,6 +286,21 @@ public class DashController {
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
         model.addAttribute("user", user);
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                String nomeFile = java.util.UUID.randomUUID() + "_" + file.getOriginalFilename();
+                java.nio.file.Path uploadPath = java.nio.file.Paths.get("uploads/");
+                if (!java.nio.file.Files.exists(uploadPath)) {
+                    java.nio.file.Files.createDirectories(uploadPath);
+                }
+                file.transferTo(uploadPath.resolve(nomeFile));
+                existingProduct.setPhotoPath(nomeFile);
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         existingProduct.setNome(productUpdate.getNome());
         existingProduct.setDescrizione(productUpdate.getDescrizione());
         existingProduct.setEvidence(productUpdate.isEvidence());
@@ -293,13 +311,14 @@ public class DashController {
         existingProduct.setDataProduzione(productUpdate.getDataProduzione());
 
         productRepo.save(existingProduct);
-
         return "redirect:/dash/show/{id}";
     }
 
     // CREATE
     @PostMapping("/insert")
-    public String store(@Valid @ModelAttribute("nuovoprodotto") Prodotto productForm, BindingResult bindingresult,
+    public String store(@Valid @ModelAttribute("nuovoprodotto") Prodotto productForm,
+            BindingResult bindingresult,
+            @RequestParam("file") MultipartFile file,
             Model model) {
 
         if (bindingresult.hasErrors()) {
@@ -361,6 +380,21 @@ public class DashController {
 
             return "/dash/home";
         }
+
+        if (!file.isEmpty()) {
+            try {
+                String nomeFile = java.util.UUID.randomUUID() + "_" + file.getOriginalFilename();
+                java.nio.file.Path uploadPath = java.nio.file.Paths.get("uploads/");
+                if (!java.nio.file.Files.exists(uploadPath)) {
+                    java.nio.file.Files.createDirectories(uploadPath);
+                }
+                file.transferTo(uploadPath.resolve(nomeFile));
+                productForm.setPhotoPath(nomeFile);
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         model.addAttribute("nuovoprodotto", productForm); // contiene gli errori
 
         productRepo.save(productForm);

@@ -95,8 +95,7 @@
                                             class="fs-6 mt-5 clickable-row fs-5 fw-bold"
                                             th:data-href="@{'/product/show/' + ${product.id}}" role="link" tabindex="0">
                                             <td class="tab_img">
-                                                <img th:src="@{/img/{imageName}(imageName=${product.photoPath})}"
-                                                    alt="Photo"
+                                                <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" shadow-sm" th:alt="${product.nome}"
                                                     style="width:90px; border-radius:12px; object-fit:cover; display:block;" />
                                             </td>
 

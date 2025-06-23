@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-8">
                     <!-- FORM  -->
-                    <form th:action="@{/dash/{id}/edit(id=${product.id})}" method="post" th:object="${product}"
+                    <form th:action="@{/dash/{id}/edit(id=${product.id})}" enctype="multipart/form-data"  method="post" th:object="${product}"
                         class="glass p-4 mx-auto" style="max-width: 480px;">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome prodotto</label>
@@ -69,7 +69,10 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
                             </div>
                         </div>
-                        
+                        <div class="mb-3">
+                            <label for="file">Immagine Prodotto</label>
+                            <input type="file" id="photoPath" name="file" class="form-control" />
+                        </div>
                         <div class="mb-3">
                             <label for="descrizione" class="form-label">Descrizione</label>
                             <textarea id="descrizione" th:field="*{descrizione}" class="form-control" rows="3"

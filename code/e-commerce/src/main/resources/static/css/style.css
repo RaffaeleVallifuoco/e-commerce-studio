@@ -366,4 +366,9 @@ input[type="number"] {
      width: 5dvw;
 }
 
-/* xs */
+.product-img {
+    height: 20rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 4rem;
+}

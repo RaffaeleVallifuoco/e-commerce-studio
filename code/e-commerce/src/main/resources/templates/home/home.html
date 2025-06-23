@@ -88,8 +88,8 @@
     <!-- JUMBO PRODOTTI -->
     <section id="prodotti" class="container my-5" th:if="${list != null}">
         <h3 class="my-5 py-5 text-center">Shop</h3>
-        <div class="row mb-5" th:each="product, stat : ${list}">->
-            <div th:if="${stat.index % 2 == 0}" class="row align-items-center mb-5">
+        <div class="text-decoration-none row mb-5" th:each="product, stat : ${list}">
+            <div th:if="${stat.index % 2 == 0}" class="text-decoration-none row align-items-center mb-5">
                 <div class="col-md-6">
                     <a th:href="@{/home/detail/{id}(id=${product.id})}">
                         <img class=" product-img shadow-sm" th:src="@{/img/{img}(img=${product.photoPath})}"

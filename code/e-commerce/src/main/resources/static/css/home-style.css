@@ -160,16 +160,26 @@ body::before {
  }
 
  .category-block.bg-success {
-     background-image: url('/img/back2.jpg');
+     background-image: url('/img/moda.jpg');
      background-size: cover;
  }
 
  .category-block.bg-danger {
-     background-image: url('/img/accessori2.jpg');
+     background-image: url('/img/accessori.jpg');
      background-size: cover;
  }
 
- /* Hover: un po' di zoom e overlay più scuro */
+ .category-block.bg-tertiary {
+     background-image: url('/img/health.jpg');
+     background-size: cover;
+ }
+
+  .category-block.bg-secondary {
+      background-image: url('/img/cura della persona.jpg');
+      background-size: cover;
+  }
+
+
  .category-block:hover::before {
      background: rgba(0, 0, 0, 0.516);
  }
@@ -191,10 +201,33 @@ body::before {
 }
 
 
+.product-img {
+    height: 20rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 4rem;
+}
+
+/* Imposta altezza minima per allineare i testi */
+.product-info {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.jumbo-product-row {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
  /* PRODUCT CARD */
  .product-card {
      background-color: rgba(255, 255, 255, 0.03);
-     border-radius: 1rem;
+     border-radius: 4rem;
      overflow: hidden;
      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
      transition: transform 0.3s ease;
@@ -208,6 +241,7 @@ body::before {
      width: 100%;
      height: 200px;
      object-fit: cover;
+     border-radius: 4rem;
  }
 
  /* CAROUSEL */

@@ -66,7 +66,7 @@ public class HomeController {
         return "/home/home";
     }
 
-    @GetMapping("/home/{category_id}")
+    @GetMapping("/{category_id}")
     public String getCategory(@PathVariable("category_id") Integer categoryId,
             Model model) {
 
@@ -81,9 +81,9 @@ public class HomeController {
         model.addAttribute("user", user);
         model.addAttribute("list", productList);
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
-        model.addAttribute("category", categoryRepo.findAll());
+        model.addAttribute("category", categoryRepo.getReferenceById(categoryId));
 
-        return "/home/index";
+        return "/home/category";
     }
 
     // FIND BY ID

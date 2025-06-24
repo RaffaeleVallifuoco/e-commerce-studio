@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import it.raffo.e_commerce.model.User;
+import jakarta.servlet.http.HttpSession;
 import it.raffo.e_commerce.model.Role;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -13,10 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class DatabaseUserDetails implements UserDetails {
 
-    private final Integer id;
-    private final String username;
-    private final String password;
-    private final Set<GrantedAuthority> authorities;
+    private Integer id;
+    private String username;
+    private String password;
+    private Set<GrantedAuthority> authorities;
 
     public DatabaseUserDetails(User user) {
         this.id = user.getId();
@@ -26,25 +27,27 @@ public class DatabaseUserDetails implements UserDetails {
         for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
             System.out.println(role.getRole());
+            // session.setAttribute("role", role.getRole());
+
         }
 
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
+
         return this.authorities;
     }
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
+
         return this.password;
     }
 
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
+
         return this.username;
     }
 

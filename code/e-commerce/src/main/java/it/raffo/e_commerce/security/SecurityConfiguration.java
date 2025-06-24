@@ -18,12 +18,19 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(request -> request
-                        // rotte accessibili a tutti
-                        .requestMatchers("/index/**", "/product/show/**", "/resources/**", "/logout", "/logout-success",
-                                "/api/**",
-                                "/img/**", "/css/**")
+                        .requestMatchers(
+                                "/index",
+                                "/home/",
+                                "/home/**",
+                                "/img/**",
+                                "/css/**",
+                                "/js/**",
+                                "/webjars/**",
+                                "/uploads/**",
+                                "/logout",
+                                "/logout-success")
                         .permitAll()
-                        .requestMatchers("/tab/**").hasAuthority("ADMIN")
+                        .requestMatchers("/dash/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -36,7 +43,7 @@ public class SecurityConfiguration {
                             if (isAdmin) {
                                 response.sendRedirect("/dash/home");
                             } else {
-                                response.sendRedirect("/ciao");
+                                response.sendRedirect("/home/");
                             }
                         })
                         .permitAll())

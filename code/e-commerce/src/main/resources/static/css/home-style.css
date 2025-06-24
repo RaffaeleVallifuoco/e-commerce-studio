@@ -470,6 +470,11 @@ body::before {
      border-radius: 3rem;
  }
 
+ .btn-orange{
+    background-color: rgba(255, 145, 0, 0.263);
+        border-radius: 3rem;
+ }
+
 
  /* OFFCANVAS  */
 

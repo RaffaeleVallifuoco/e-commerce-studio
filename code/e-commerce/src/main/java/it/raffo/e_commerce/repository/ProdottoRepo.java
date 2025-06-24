@@ -14,9 +14,6 @@ public interface ProdottoRepo extends JpaRepository<Prodotto, Integer> {
 
     List<Prodotto> findByCategoriaId(Integer categoriaId);
 
-    @Query("SELECT p FROM Prodotto p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.descrizione) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.marca.nome) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Prodotto> cercaProdotti(@Param("keyword") String keyword);
-
     int countByAllIgnoreCase();
 
     int countByQuantitaLessThan(int quantita);
@@ -27,4 +24,6 @@ public interface ProdottoRepo extends JpaRepository<Prodotto, Integer> {
 
     int countByQuantitaGreaterThanAndQuantitaLessThan(int min, int max);
 
+    @Query("SELECT p FROM Prodotto p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.descrizione) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(p.marca.nome) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Prodotto> cercaProdotti(@Param("keyword") String keyword);
 }

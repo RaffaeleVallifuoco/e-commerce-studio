@@ -15,7 +15,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nome", length = 100, nullable = false)
+    @Column(name = "nome", length = 100, nullable = false, unique = true)
     private String nome;
 
     // CONSTRUCTORS

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -23,13 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import it.raffo.e_commerce.model.Prodotto;
 import it.raffo.e_commerce.model.User;
 import it.raffo.e_commerce.model.User.Sesso;
 import it.raffo.e_commerce.repository.ProdottoRepo;
 import it.raffo.e_commerce.repository.UserRepo;
-import jakarta.validation.Valid;
 import it.raffo.e_commerce.repository.CategoryRepo;
 import it.raffo.e_commerce.repository.MarcaRepo;
 import it.raffo.e_commerce.repository.OrdineRepository;
@@ -37,8 +35,6 @@ import it.raffo.e_commerce.repository.OrdineRepository;
 @Controller
 @RequestMapping("/dash")
 public class DashController {
-
-    private final DaoAuthenticationProvider authenticationProvider;
 
     @Autowired
     ProdottoRepo productRepo;
@@ -55,12 +51,7 @@ public class DashController {
     @Autowired
     OrdineRepository ordineRepo;
 
-    DashController(DaoAuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
-    }
-
     // HOME
-
     @GetMapping("/home")
     public String dashboardHome(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
@@ -68,28 +59,15 @@ public class DashController {
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
-        model.addAttribute("user", user);
-        model.addAttribute("category", categoryRepo.findAll());
-        model.addAttribute("total", productRepo.countByAllIgnoreCase());
-        model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
-        model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
-        model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
-        model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
         Double aov = ordineRepo.mediaOrdini();
         if (aov == null)
             aov = 0.0;
-        model.addAttribute("aov", aov);
-        model.addAttribute("orders", ordineRepo.count());
-        model.addAttribute("brand", brandRepo.findAll());
-        model.addAttribute("nuovoprodotto", new Prodotto());
 
-        // GRAFICO VENDITE
+        // GRAFICI JS
 
         List<Object[]> vendite = ordineRepo.getVenditePerData();
-
         List<String> dateLabels = new ArrayList<>();
         List<Double> totalePrezzi = new ArrayList<>();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         for (Object[] riga : vendite) {
@@ -100,9 +78,6 @@ public class DashController {
             totalePrezzi.add(somma);
         }
 
-        model.addAttribute("dateLabels", dateLabels);
-        model.addAttribute("totalePrezzi", totalePrezzi);
-
         List<Object[]> ordiniPerSesso = ordineRepo.countOrdiniPerSesso();
         Map<String, Long> sessoCount = new HashMap<>();
 
@@ -112,13 +87,27 @@ public class DashController {
             sessoCount.put(sesso, count);
         }
 
+        // ATTRIBUTES
+
         model.addAttribute("ordiniPerSesso", sessoCount);
+        model.addAttribute("user", user);
+        model.addAttribute("category", categoryRepo.findAll());
+        model.addAttribute("total", productRepo.countByAllIgnoreCase());
+        model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
+        model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
+        model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
+        model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
+        model.addAttribute("aov", aov);
+        model.addAttribute("orders", ordineRepo.count());
+        model.addAttribute("brand", brandRepo.findAll());
+        model.addAttribute("dateLabels", dateLabels);
+        model.addAttribute("totalePrezzi", totalePrezzi);
+        model.addAttribute("nuovoprodotto", new Prodotto());
 
         return "/dash/home";
     }
 
     // PFODUCT FIND ALL
-
     @GetMapping("/products")
     public String productsList(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
@@ -137,6 +126,9 @@ public class DashController {
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
+
+        // ATTRIBUTES
+
         model.addAttribute("user", user);
         model.addAttribute("list", productList);
         model.addAttribute("keyword", keyword);
@@ -164,6 +156,9 @@ public class DashController {
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
+
+        // ATTRIBUTES
+
         model.addAttribute("user", user);
         model.addAttribute("list", productList);
         model.addAttribute("keyword", keyword);
@@ -192,6 +187,9 @@ public class DashController {
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
+
+        // ATTRIBUTES
+
         model.addAttribute("user", user);
         model.addAttribute("list", productList);
         model.addAttribute("keyword", keyword);
@@ -203,7 +201,6 @@ public class DashController {
     }
 
     // SEARCH BY CATEGORY
-
     @GetMapping("/home/{category_id}")
     public String getCategory(@PathVariable("category_id") Integer categoryId,
             Model model) {
@@ -215,6 +212,9 @@ public class DashController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
+
+        // ATTRIBUTES
+
         User user = currentUser.get();
         model.addAttribute("user", user);
         model.addAttribute("list", productList);
@@ -225,10 +225,8 @@ public class DashController {
     }
 
     // PRODUCT DETAIL
-
     @GetMapping("/show/{id}")
-    public String getProductById(@PathVariable("id") Integer id,
-            Model model) {
+    public String getProductById(@PathVariable("id") Integer id, Model model) {
 
         Prodotto product = productRepo.getReferenceById(id);
 
@@ -236,6 +234,9 @@ public class DashController {
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
+
+        // ATTRIBUTES
+
         model.addAttribute("user", user);
         model.addAttribute("product", product);
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
@@ -245,7 +246,7 @@ public class DashController {
 
     }
 
-    // FORM UPDATE
+    // UPDATE
     @GetMapping({ "/form/{id}" })
     public String productForm(@PathVariable(required = true) Integer id, Model model) {
         if (id != null) {
@@ -254,6 +255,9 @@ public class DashController {
             String username = authentication.getName();
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
+
+            // ATTRIBUTES
+
             model.addAttribute("user", user);
             model.addAttribute("product", product);
             model.addAttribute("category", categoryRepo.findAll());
@@ -264,19 +268,21 @@ public class DashController {
         return "/dash/form"; //
     }
 
-    // UPDATE
     @PostMapping("/{id}/edit")
-    public String Update(@PathVariable("id") Integer id,
-            @Valid @ModelAttribute("product") Prodotto productUpdate,
+    public String Update(@PathVariable("id") Integer id, @Valid @ModelAttribute("product") Prodotto productUpdate,
             BindingResult bindingresult,
             @RequestParam("file") MultipartFile file,
             Model model, RedirectAttributes redirectAttributes) {
 
+        // UPDATE ERROR
         if (bindingresult.hasErrors()) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
+
+            // ATTRIBUTES
+
             model.addAttribute("user", user);
             model.addAttribute("evidence", productRepo.findByEvidenceTrue());
             model.addAttribute("category", categoryRepo.findAll());
@@ -284,13 +290,16 @@ public class DashController {
             return "/dash/form";
         }
 
+        // UPDATE
+
         Prodotto existingProduct = productRepo.getReferenceById(id);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<User> currentUser = userRepo.findByUsername(username);
         User user = currentUser.get();
-        model.addAttribute("user", user);
+
+        // MULTIPART EXCEPTION HANDLING
 
         if (file != null && !file.isEmpty()) {
             try {
@@ -315,7 +324,12 @@ public class DashController {
         existingProduct.setQuantita(productUpdate.getQuantita());
         existingProduct.setDataProduzione(productUpdate.getDataProduzione());
 
+        // SAVE
+
         productRepo.save(existingProduct);
+
+        // ATTRIBUTES
+        model.addAttribute("user", user);
         redirectAttributes.addFlashAttribute("success", "Prodotto modifiato con successo!");
         return "redirect:/dash/show/{id}";
     }
@@ -327,33 +341,18 @@ public class DashController {
             @RequestParam("file") MultipartFile file,
             Model model, RedirectAttributes redirectAttributes) {
 
+        // INSERT ERROR
         if (bindingresult.hasErrors()) {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
-            model.addAttribute("user", user);
-            model.addAttribute("category", categoryRepo.findAll());
-            model.addAttribute("brand", brandRepo.findAll());
-            model.addAttribute("openOffcanvas", true);
-
-            // Attributi home
-
-            model.addAttribute("category", categoryRepo.findAll());
-            model.addAttribute("total", productRepo.countByAllIgnoreCase());
-            model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
-            model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
-            model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
-            model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
             Double aov = ordineRepo.mediaOrdini();
             if (aov == null)
                 aov = 0.0;
-            model.addAttribute("aov", aov);
-            model.addAttribute("orders", ordineRepo.count());
-            model.addAttribute("brand", brandRepo.findAll());
 
-            // GRAFICO VENDITE
+            // GRAFICI JS
 
             List<Object[]> vendite = ordineRepo.getVenditePerData();
 
@@ -370,9 +369,6 @@ public class DashController {
                 totalePrezzi.add(somma);
             }
 
-            model.addAttribute("dateLabels", dateLabels);
-            model.addAttribute("totalePrezzi", totalePrezzi);
-
             List<Object[]> ordiniPerSesso = ordineRepo.countOrdiniPerSesso();
             Map<String, Long> sessoCount = new HashMap<>();
 
@@ -382,10 +378,29 @@ public class DashController {
                 sessoCount.put(sesso, count);
             }
 
+            // ATTRIBUTES RITORNO A HOME
+            model.addAttribute("user", user);
+            model.addAttribute("category", categoryRepo.findAll());
+            model.addAttribute("brand", brandRepo.findAll());
+            model.addAttribute("openOffcanvas", true);
+
+            model.addAttribute("category", categoryRepo.findAll());
+            model.addAttribute("total", productRepo.countByAllIgnoreCase());
+            model.addAttribute("outOfStock", productRepo.countByQuantitaLessThan(1));
+            model.addAttribute("runningOut", productRepo.countByQuantitaGreaterThanAndQuantitaLessThan(1, 20));
+            model.addAttribute("uomini", userRepo.countBySesso(Sesso.M));
+            model.addAttribute("donne", userRepo.countBySesso(Sesso.F));
+            model.addAttribute("aov", aov);
+            model.addAttribute("orders", ordineRepo.count());
+            model.addAttribute("brand", brandRepo.findAll());
+            model.addAttribute("dateLabels", dateLabels);
+            model.addAttribute("totalePrezzi", totalePrezzi);
             model.addAttribute("ordiniPerSesso", sessoCount);
 
             return "/dash/home";
         }
+
+        // MULTIPART EXCEPTION HANDLING
 
         if (!file.isEmpty()) {
             try {
@@ -401,9 +416,11 @@ public class DashController {
             }
         }
 
-        model.addAttribute("nuovoprodotto", productForm); // contiene gli errori
-
         productRepo.save(productForm);
+
+        // ATTRIBUTES
+
+        model.addAttribute("nuovoprodotto", productForm); // contiene gli errori
         redirectAttributes.addFlashAttribute("success", "Prodotto inserito con successo!");
 
         return "redirect:/dash/home";

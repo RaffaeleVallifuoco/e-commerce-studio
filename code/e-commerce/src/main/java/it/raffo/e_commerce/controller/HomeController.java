@@ -17,7 +17,6 @@ import it.raffo.e_commerce.model.Prodotto;
 import it.raffo.e_commerce.model.User;
 import it.raffo.e_commerce.repository.ProdottoRepo;
 import it.raffo.e_commerce.repository.UserRepo;
-import jakarta.servlet.http.HttpSession;
 import it.raffo.e_commerce.repository.CategoryRepo;
 import it.raffo.e_commerce.repository.MarcaRepo;
 
@@ -37,40 +36,7 @@ public class HomeController {
     @Autowired
     UserRepo userRepo;
 
-    // @GetMapping("/")
-    // public String index(Model model, @RequestParam(name = "keyword", required =
-    // false) String keyword) {
-
-    // List<Prodotto> productList = new ArrayList<>();
-    // List<Prodotto> evidenceList = new ArrayList<>();
-
-    // if (keyword != null && !keyword.isBlank()) {
-
-    // productList = productRepo.cercaProdotti(keyword);
-
-    // } else {
-
-    // productList = productRepo.findAll();
-    // }
-
-    // evidenceList = productRepo.findByEvidenceTrue();
-
-    // Authentication authentication =
-    // SecurityContextHolder.getContext().getAuthentication();
-    // if (authentication != null && authentication.isAuthenticated()
-    // && !authentication.getPrincipal().equals("anonymousUser")) {
-    // String username = authentication.getName();
-    // userRepo.findByUsername(username).ifPresent(user ->
-    // model.addAttribute("user", user));
-    // }
-    // model.addAttribute("list", productList);
-    // model.addAttribute("keyword", keyword);
-    // model.addAttribute("evidence", evidenceList);
-    // model.addAttribute("category", categoryRepo.findAll());
-
-    // return "/home/home";
-    // }
-
+    // HOME
     @GetMapping("/")
     public String index(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
@@ -102,6 +68,7 @@ public class HomeController {
         return "/home/home";
     }
 
+    // CATEGORY
     @GetMapping("/{category_id}")
     public String getCategory(@PathVariable("category_id") Integer categoryId,
             Model model) {
@@ -116,12 +83,12 @@ public class HomeController {
             String username = authentication.getName();
             userRepo.findByUsername(username).ifPresent(user -> model.addAttribute("user", user));
         }
+
+        // ATTRIBUTES
+
         model.addAttribute("list", productList);
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
         model.addAttribute("category", categoryRepo.getReferenceById(categoryId));
-        model.addAttribute("userHasAdminRole",
-                model.containsAttribute("user") && ((User) model.getAttribute("user")).getRoles().stream()
-                        .anyMatch(r -> r.getRole().equals("ADMIN")));
 
         return "/home/category";
     }
@@ -139,6 +106,9 @@ public class HomeController {
             String username = authentication.getName();
             userRepo.findByUsername(username).ifPresent(user -> model.addAttribute("user", user));
         }
+
+        // ATTRIBUTES
+
         model.addAttribute("product", product);
         model.addAttribute("evidence", productRepo.findByEvidenceTrue());
         model.addAttribute("category", categoryRepo.findAll());

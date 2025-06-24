@@ -24,10 +24,10 @@ public class Prodotto {
     private Integer id;
 
     @NotBlank(message = "Campo Obbligatorio")
-    @Column(name = "nome", length = 100, nullable = false)
+    @Column(name = "nome", length = 100, nullable = false, unique = true)
     private String nome;
 
-    @Column(name = "descrizione", length = 600, nullable = true)
+    @Column(name = "descrizione", length = 600, nullable = true, unique = true)
     private String descrizione;
 
     @NotNull(message = "Campo Obbligatorio")
@@ -59,6 +59,7 @@ public class Prodotto {
 
     @ManyToMany(mappedBy = "prodotti")
     private Set<Ordine> ordini;
+
     // CONSTRUCTORS
 
     public Prodotto() {

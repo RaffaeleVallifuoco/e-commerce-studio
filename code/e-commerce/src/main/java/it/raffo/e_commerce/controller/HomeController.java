@@ -72,7 +72,7 @@ public class HomeController {
     // }
 
     @GetMapping("/")
-    public String index(HttpSession model, @RequestParam(name = "keyword", required = false) String keyword) {
+    public String index(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
 
         List<Prodotto> productList = new ArrayList<>();
         List<Prodotto> evidenceList = new ArrayList<>();
@@ -92,12 +92,12 @@ public class HomeController {
         if (authentication != null && authentication.isAuthenticated()
                 && !authentication.getPrincipal().equals("anonymousUser")) {
             String username = authentication.getName();
-            userRepo.findByUsername(username).ifPresent(user -> model.setAttribute("user", user));
+            userRepo.findByUsername(username).ifPresent(user -> model.addAttribute("user", user));
         }
-        model.setAttribute("list", productList);
-        model.setAttribute("keyword", keyword);
-        model.setAttribute("evidence", evidenceList);
-        model.setAttribute("category", categoryRepo.findAll());
+        model.addAttribute("list", productList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("evidence", evidenceList);
+        model.addAttribute("category", categoryRepo.findAll());
 
         return "/home/home";
     }

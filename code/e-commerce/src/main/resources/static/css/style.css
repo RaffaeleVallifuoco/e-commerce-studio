@@ -107,7 +107,7 @@ body::before {
     margin-left: 20dvw;
     width: 80dvw;
     padding: 10rem;
-    padding-top: 320dvh;
+    padding-top: 80dvh;
     transition: margin-left 0.2s;
 }
 
@@ -372,3 +372,35 @@ input[type="number"] {
     object-fit: cover;
     border-radius: 4rem;
 }
+
+/* TOAST  */
+
+.toast-container {
+    z-index: 1055;
+}
+
+.toast {
+    background-color: rgba(30, 30, 31, 0.6);
+     border-radius: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    min-width: 320px;
+    font-size: 1.1rem;
+}
+
+.toast-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.toast-body {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;

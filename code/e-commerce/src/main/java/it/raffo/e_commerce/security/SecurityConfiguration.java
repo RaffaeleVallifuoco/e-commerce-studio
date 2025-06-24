@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                                 "/logout",
                                 "/logout-success")
                         .permitAll()
-                        .requestMatchers("/dash/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/dash/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")

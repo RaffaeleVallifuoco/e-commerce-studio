@@ -26,19 +26,20 @@
     <header>
         <nav class="navbar navbar-expand-md glass_nav">
             <div class="container-fluid my-o py-0 ">
-                <!-- Logo -->
                 <a class="navbar-brand icon-link icon-link-hover fs-4 my-0 py-0 mx-5" th:href="@{/index/home}">
                     <img th:src="@{/img/nozama_logo_white.png}" alt="nozama ogo" class="navbar-logo my-o py-0" width="90" />
                 </a>
-    
-                <!-- Bottone toggler per collapse su sm -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-orange btn-sm" th:href="@{/login}">Accedi</a>
+                </div>
+                <div sec:authorize="isAuthenticated() && hasAuthority('ADMIN')">
+                    <a class="btn btn-orange btn-sm" th:href="@{/dash/home}">Dashboard</a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-    
-                <!-- Contenuto della navbar che collassa -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="me-auto mx-4">
                         <div class="dropdown mx-4">

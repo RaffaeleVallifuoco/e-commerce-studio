@@ -29,7 +29,7 @@
                     <div sec:authorize="!isAuthenticated()">
                         <a class="btn btn-orange btn-sm" th:href="@{/login}">Accedi</a>
                     </div>
-                    <div sec:authorize="isAuthenticated() && hasRole('ADMIN')">
+                    <div sec:authorize="isAuthenticated() && hasAuthority('ADMIN')">
                         <a class="btn btn-orange btn-sm" th:href="@{/dash/home}">Dashboard</a>
                     </div>
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navCollapse">
@@ -95,7 +95,8 @@
     <section id="prodotti" class="container my-5" th:if="${list != null}">
         <h3 class="my-5 py-5 text-center">Shop</h3>
         <div class="text-decoration-none row mb-5" th:each="product, stat : ${list}">
-            <div th:if="${stat.index % 2 == 0}" class="text-decoration-none row align-items-center mb-5">
+             <div th:if="${stat.index % 2 == 0}" class="text-decoration-none row align-items-center mb-5">
+                
                 <div class="col-md-6">
                     <a th:href="@{/home/detail/{id}(id=${product.id})}">
                         <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" product-img shadow-sm"
@@ -105,7 +106,7 @@
                 <div class="col-md-6">
                     <h3 th:text="${product.nome}">Nome</h3>
                     <p class="text-muted fw-bold" th:text="'€ ' + ${product.prezzo}">€ 0.00</p>
-                    <a class="btn btn-outline-light mt-2" th:href="@{/home/detail/{id}(id=${product.id})}">Shop now</a>
+                    <a class="btn btn-outline-light rounded-pill mt-2" th:href="@{/home/detail/{id}(id=${product.id})}">Shop now</a>
                 </div>
             </div>
 
@@ -114,13 +115,12 @@
                     <a th:href="@{/home/detail/{id}(id=${product.id})}">
                         <img th:src="@{'/uploads/' + ${product.photoPath}}" class=" product-img shadow-sm"
                             th:alt="${product.nome}">
-
                     </a>
                 </div>
                 <div class="col-md-6">
                     <h3 th:text="${product.nome}">Nome</h3>
                     <p class="text-muted fw-bold" th:text="'€ ' + ${product.prezzo}">€ 0.00</p>
-                    <a class="btn btn-outline-light mt-2" th:href="@{/home/detail/{id}(id=${product.id})}">Shop now</a>
+                    <a class="btn btn-outline-light rounded-pill mt-2" th:href="@{/home/detail/{id}(id=${product.id})}">Shop now</a>
                 </div>
             </div>
         </div>

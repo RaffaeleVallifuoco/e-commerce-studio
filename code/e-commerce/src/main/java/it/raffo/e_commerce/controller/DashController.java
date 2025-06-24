@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import it.raffo.e_commerce.model.Prodotto;
 import it.raffo.e_commerce.model.User;
 import it.raffo.e_commerce.model.User.Sesso;
@@ -268,7 +270,7 @@ public class DashController {
             @Valid @ModelAttribute("product") Prodotto productUpdate,
             BindingResult bindingresult,
             @RequestParam("file") MultipartFile file,
-            Model model) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingresult.hasErrors()) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -276,6 +278,9 @@ public class DashController {
             Optional<User> currentUser = userRepo.findByUsername(username);
             User user = currentUser.get();
             model.addAttribute("user", user);
+            model.addAttribute("evidence", productRepo.findByEvidenceTrue());
+            model.addAttribute("category", categoryRepo.findAll());
+            model.addAttribute("brand", brandRepo.findAll());
             return "/dash/form";
         }
 
@@ -311,6 +316,7 @@ public class DashController {
         existingProduct.setDataProduzione(productUpdate.getDataProduzione());
 
         productRepo.save(existingProduct);
+        redirectAttributes.addFlashAttribute("success", "Prodotto modifiato con successo!");
         return "redirect:/dash/show/{id}";
     }
 
@@ -319,7 +325,7 @@ public class DashController {
     public String store(@Valid @ModelAttribute("nuovoprodotto") Prodotto productForm,
             BindingResult bindingresult,
             @RequestParam("file") MultipartFile file,
-            Model model) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingresult.hasErrors()) {
 
@@ -398,8 +404,9 @@ public class DashController {
         model.addAttribute("nuovoprodotto", productForm); // contiene gli errori
 
         productRepo.save(productForm);
+        redirectAttributes.addFlashAttribute("success", "Prodotto inserito con successo!");
 
-        return "redirect:/dash/products";
+        return "redirect:/dash/home";
 
     }
 

@@ -271,7 +271,7 @@ table.table.tab tbody tr.out-stock td {
 
 .modal {
 
-    background-color: rgba(30, 30, 31, 0.6);
+    background-color: rgba(65, 5, 77, 0.257);
     border-radius: 1rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -284,11 +284,12 @@ table.table.tab tbody tr.out-stock td {
 }
 
 .modal-content {
-    background-color: rgba(232, 6, 104, 0.21);
-    border-radius: 1rem;
+    background-color: rgba(135, 133, 133, 0.11);
+    border-radius: 2rem;
+    padding: 1rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0);
     color: white;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     border: 0;

@@ -15,15 +15,17 @@
     <!-- NAV -->
     <div class="container-fluid">
         <div class="row">
-    
             <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top navbar-public">
                 <div class="container-fluid">
                     <a class="navbar-brand text-decoration-none">skillMART</a>
                     <div sec:authorize="!isAuthenticated()">
-                        <a class="btn btn-orange btn-sm" th:href="@{/login}">Accedi</a>
+                        <a class="btn btn-orange btn-sm" th:href="@{/login}">Login</a>
                     </div>
                     <div sec:authorize="isAuthenticated() && hasAuthority('ADMIN')">
                         <a class="btn btn-orange btn-sm" th:href="@{/dash/home}">Dashboard</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="btn btn-orange btn-sm" th:href="@{/logout}">Logout</a>
                     </div>
                     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -31,7 +33,7 @@
                     <div class="collapse navbar-collapse" id="navCollapse">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a class="nav-link" href="/home/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/home/#prodotti">Prodotti</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#prodotti">Prodotti</a></li>
                             <li class="nav-item"><a class="nav-link" href="/home/#categorie">Categorie</a></li>
     
                         </ul>
@@ -39,7 +41,6 @@
                 </div>
             </nav>
         </div>
-    </div>
     </div>
 
     <!-- HERO CON IMMAGINE PRODOTTO -->

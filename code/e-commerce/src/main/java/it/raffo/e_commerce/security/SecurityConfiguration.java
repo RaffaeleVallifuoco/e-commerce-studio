@@ -19,7 +19,6 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/index",
                                 "/home/",
                                 "/home/**",
                                 "/img/**",
@@ -52,7 +51,8 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/logout-success")
                         .permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/403")); // Configura la pagina di errore per accesso negato
+                        .accessDeniedPage("/403"));
+        // .notFoundPage("404");
 
         return http.build();
     }

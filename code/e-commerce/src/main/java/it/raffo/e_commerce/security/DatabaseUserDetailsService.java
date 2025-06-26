@@ -19,7 +19,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
+
         Optional<User> user = userRepository.findByUsername(username);
 
         if (user.isPresent()) {

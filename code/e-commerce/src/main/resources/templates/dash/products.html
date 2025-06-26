@@ -159,19 +159,16 @@
                                         aria-hidden="true">
                                         <div class="modal-dialog my-5">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                <div class="modal-header border-0">
+                                                    <h1 class="modal-title fs-3 fw-bold" id="staticBackdropLabel">
                                                         Attenzione</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body card-bg py-2 mx-4">
+                                                <div class="modal-body fs-5 border-0 card-bg py-2 mx-4">
                                                     Sei sicuro di voler eliminare il prodotto ?
-                                                    <img class="ms-auto px-4" th:src="@{/img/alert.webp}" width="20%"
-                                                        height="auto"></img>
                                                 </div>
-
-                                                <div class="modal-footer">
+                                                <div class="modal-footer border-0">
                                                     <form th:action="@{'/dash/{id}/delete'(id=${product.id})}"
                                                         method="post">
                                                         <button type="button" class="btn btn-grey rounded"

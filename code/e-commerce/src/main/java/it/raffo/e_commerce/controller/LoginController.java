@@ -31,8 +31,8 @@ public class LoginController {
             HttpServletRequest request) {
 
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password));
+            Authentication auth = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if (auth.isAuthenticated()) {
                 request.getSession().setAttribute("user", auth.getPrincipal());
                 boolean isAdmin = auth.getAuthorities().stream()
@@ -40,7 +40,7 @@ public class LoginController {
                 if (isAdmin) {
                     return new ModelAndView("redirect:/dash/home");
                 } else {
-                    return new ModelAndView("redirect:/ciao");
+                    return new ModelAndView("redirect:/home/");
                 }
             }
         } catch (AuthenticationException e) {

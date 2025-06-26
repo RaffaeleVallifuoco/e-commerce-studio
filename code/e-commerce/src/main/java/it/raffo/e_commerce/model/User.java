@@ -40,7 +40,7 @@ public class User {
     private String photoPath;
 
     @NotBlank(message = "Campo Obbligatorio")
-    @Column(name = "email", length = 60, nullable = false)
+    @Column(name = "email", length = 60, nullable = false, unique = true)
     private String email;
 
     public enum Sesso {

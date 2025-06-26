@@ -50,7 +50,6 @@ body::before {
 
 .sidebar {
     width: 260px;
-    /* o la larghezza reale della tua sidebar */
     flex-shrink: 0;
 }
 
@@ -96,6 +95,20 @@ body::before {
     font-size: 1.25rem;
 }
 
+.sidebar:hover~.main-content {
+    margin-left: 220px;
+}
+
+.sidebar-img {
+    width: 25%;
+}
+
+.profile {
+    width: 3dvw;
+}
+
+/* MAIN CONTENT  */
+
 .main-content {
     margin-left: 5dvw;
     padding: 10rem;
@@ -119,6 +132,15 @@ body::before {
     min-height: 100vh;
 }
 
+.detail-main-content {
+    margin-left: 10dvw;
+    padding: 10rem;
+    padding-top: 35rem;
+    transition: margin-left 0.2s;
+}
+
+/* TABLE  */
+
 .col-descrizione {
     max-width: 250px;
     word-wrap: break-word;
@@ -134,29 +156,75 @@ body::before {
     -webkit-overflow-scrolling: touch;
 }
 
+/* CARD  */
+
 .card-scrollable {
     max-height: 80vh;
     overflow-y: auto;
 }
 
-.detail-main-content {
-    margin-left: 10dvw;
-    padding: 10rem;
-    padding-top: 35rem;
-    transition: margin-left 0.2s;
+.card {
+    background-color: rgba(30, 30, 31, 0.4);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    color: white;
 }
 
-.sidebar:hover~.main-content {
-    margin-left: 220px;
+.card-bg {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 3rem;
 }
 
-.sidebar-img {
-    width: 25%;
+.card-header {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    color: white;
+    border-radius: 3rem;
 }
 
-.profile {
-    width: 5dvw;
+.tab {
+    border-radius: 12px;
+    overflow: hidden;
 }
+
+.tab-foto img {
+    width: 80px;
+    height: 80px;
+    min-height: 29px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.col-descrizione {
+    min-width: 300px;
+}
+
+
+
+.col-large {
+    min-width: 200px;
+}
+
+table.table.tab tbody tr.low-quantity td {
+    background-color: #0627ff27 !important;
+    color: white;
+}
+
+table.table.tab tbody tr.out-stock td {
+    background-color: #cf025b31 !important;
+    color: white;
+}
+
 
 /* JUMBOTRON  */
 .jumbotron {
@@ -197,48 +265,6 @@ body::before {
 
 .jumbotron:hover {
     transform: scale(1.08);
-    /* ingrandisce del 5% */
-}
-
-/* TABLE */
-
-
-.tab {
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.tab-foto img {
-    width: 80px;
-    height: 80px;
-    min-height: 29px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.col-descrizione {
-    min-width: 300px;
-}
-
-
-
-.col-large {
-    min-width: 200px;
-}
-
-table.table.tab tbody tr.low-quantity td {
-    background-color: #0627ff27 !important;
-    color: white;
-}
-
-table.table.tab tbody tr.out-stock td {
-    background-color: #cf025b31 !important;
-    color: white;
 }
 
 /* MODAL  */
@@ -266,32 +292,6 @@ table.table.tab tbody tr.out-stock td {
     color: white;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     border: 0;
-}
-
-/* CARD  */
-
-.card {
-    background-color: rgba(30, 30, 31, 0.4);
-    border-radius: 1rem;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    color: white;
-}
-
-.card-bg {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 3rem;
-}
-
-.card-header {
-    background-color: rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    color: white;
-    border-radius: 3rem;
 }
 
 /* INPUT  */
@@ -404,3 +404,48 @@ input[type="number"] {
 .toast-body {
     padding: 1rem 1.25rem;
     font-size: 1rem;
+}
+
+/* FORM  */
+
+.form-style {
+    background-color: rgba(30, 30, 31, 0.6);
+    border-radius: 2rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-style .form-control,
+.form-style .form-select {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 2rem;
+    padding: 0.75rem 1rem;
+}
+
+.form-style .form-control:focus,
+.form-style .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+}
+
+.form-style label {
+    font-weight: 500;
+    color: #ddd;
+}
+
+.form-style .btn-primary {
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    background-color: rgba(2, 109, 185, 0.263);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
